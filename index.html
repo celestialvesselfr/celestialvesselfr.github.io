@@ -12,220 +12,155 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="grain"></div>
+    <div class="cursor-glow"></div>
     
-    <nav class="navbar">
-        <div class="nav-content">
-            <div class="nav-logo">nozomi</div>
-            <div class="nav-links">
-                <a href="#features">features</a>
-                <a href="#docs">docs</a>
-                <a href="#discord" class="nav-cta">discord</a>
-            </div>
+    <header class="header">
+        <div class="logo-section">
+            <span class="logo-bracket">[</span>
+            <span class="logo-text">nozomi</span>
+            <span class="logo-bracket">]</span>
+            <span class="version-tag">v2.5</span>
         </div>
-    </nav>
+        <nav class="nav">
+            <a href="#info" class="nav-item" data-text="info">info</a>
+            <a href="#script" class="nav-item" data-text="script">script</a>
+            <a href="https://github.com/celestialvesselfr/nozomi" class="nav-item" data-text="github">github</a>
+        </nav>
+    </header>
 
-    <section class="hero">
-        <div class="hero-content">
-            <div class="hero-badge">modern script hub</div>
-            <h1 class="hero-title">
-                <span class="gradient-text">nozomi</span>
-            </h1>
-            <p class="hero-description">
-                advanced roblox script hub with modern ui, auto-updates, and game-specific features
-            </p>
-            <div class="hero-buttons">
-                <button class="btn btn-primary" onclick="copyScript()">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                    </svg>
-                    copy script
-                </button>
-                <a href="#docs" class="btn btn-secondary">
-                    read docs
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M5 12h14M12 5l7 7-7 7"/>
-                    </svg>
-                </a>
-            </div>
-            <div class="stats">
-                <div class="stat">
-                    <div class="stat-value" id="exec-count">loading...</div>
-                    <div class="stat-label">executions</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-value">50+</div>
-                    <div class="stat-label">games supported</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-value">24/7</div>
-                    <div class="stat-label">uptime</div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="features" id="features">
-        <div class="container">
-            <h2 class="section-title">features</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                            <line x1="9" y1="3" x2="9" y2="21"></line>
-                        </svg>
+    <main class="main">
+        <section class="terminal-section">
+            <div class="terminal-window">
+                <div class="terminal-header">
+                    <div class="terminal-dots">
+                        <span></span><span></span><span></span>
                     </div>
-                    <h3>modern ui library</h3>
-                    <p>clean, intuitive interface with smooth animations and customizable themes</p>
+                    <div class="terminal-title">nozomi.sh</div>
                 </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-                            <line x1="12" y1="22.08" x2="12" y2="12"></line>
-                        </svg>
+                <div class="terminal-body">
+                    <div class="terminal-line">
+                        <span class="prompt">$</span>
+                        <span class="command">./nozomi --info</span>
                     </div>
-                    <h3>auto-updates</h3>
-                    <p>automatic script and asset updates from github with intelligent caching</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <polygon points="10 8 16 12 10 16 10 8"></polygon>
-                        </svg>
+                    <div class="terminal-output">
+                        <p><span class="output-label">name:</span> nozomi</p>
+                        <p><span class="output-label">type:</span> universal script hub</p>
+                        <p><span class="output-label">games:</span> 50+ supported</p>
+                        <p><span class="output-label">status:</span> <span class="status-active">active</span></p>
+                        <p><span class="output-label">executions:</span> <span id="exec-count">calculating...</span></p>
                     </div>
-                    <h3>game-specific</h3>
-                    <p>custom features for popular games with automatic detection</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
-                            <line x1="7" y1="7" x2="7.01" y2="7"></line>
-                        </svg>
-                    </div>
-                    <h3>theme system</h3>
-                    <p>customize colors, save presets, and share themes with others</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                        </svg>
-                    </div>
-                    <h3>reliable</h3>
-                    <p>works with all major executors and handles game updates gracefully</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
-                        </svg>
-                    </div>
-                    <h3>performance</h3>
-                    <p>optimized code with minimal resource usage and fast load times</p>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="docs" id="docs">
-        <div class="container">
-            <h2 class="section-title">getting started</h2>
-            <div class="docs-content">
-                <div class="doc-step">
-                    <div class="step-number">1</div>
-                    <div class="step-content">
-                        <h3>copy the script</h3>
-                        <p>click the "copy script" button above to copy the loadstring to your clipboard</p>
-                    </div>
-                </div>
-                
-                <div class="doc-step">
-                    <div class="step-number">2</div>
-                    <div class="step-content">
-                        <h3>paste in executor</h3>
-                        <p>open your executor and paste the script into the script box</p>
-                    </div>
-                </div>
-                
-                <div class="doc-step">
-                    <div class="step-number">3</div>
-                    <div class="step-content">
-                        <h3>execute</h3>
-                        <p>press execute and the ui will appear with all available features</p>
+                    <div class="terminal-line">
+                        <span class="prompt">$</span>
+                        <span class="command typing-animation">ready to execute_</span>
                     </div>
                 </div>
             </div>
             
-            <div class="code-block">
-                <div class="code-header">
-                    <span>loadstring</span>
-                    <button class="copy-code-btn" onclick="copyScript()">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                        </svg>
-                        copy
+            <div class="floating-card">
+                <h2 class="card-title">
+                    <span class="title-bracket">{'</span>
+                    features
+                    <span class="title-bracket">'}</span>
+                </h2>
+                <ul class="feature-list">
+                    <li><span class="bullet">→</span> auto-updating ui library</li>
+                    <li><span class="bullet">→</span> game-specific modules</li>
+                    <li><span class="bullet">→</span> theme customization</li>
+                    <li><span class="bullet">→</span> asset caching system</li>
+                    <li><span class="bullet">→</span> cross-executor support</li>
+                    <li><span class="bullet">→</span> config save/load</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="script-section" id="script">
+            <div class="script-container">
+                <div class="section-header">
+                    <h2 class="section-number">[01]</h2>
+                    <h3 class="section-heading">get started</h3>
+                </div>
+                
+                <div class="instructions">
+                    <div class="instruction-item">
+                        <span class="instruction-num">1.</span>
+                        <span class="instruction-text">open your executor</span>
+                    </div>
+                    <div class="instruction-item">
+                        <span class="instruction-num">2.</span>
+                        <span class="instruction-text">paste the loadstring below</span>
+                    </div>
+                    <div class="instruction-item">
+                        <span class="instruction-num">3.</span>
+                        <span class="instruction-text">execute and enjoy</span>
+                    </div>
+                </div>
+                
+                <div class="code-container">
+                    <div class="code-box">
+                        <div class="code-line-numbers">
+                            <span>1</span>
+                        </div>
+                        <div class="code-content">
+                            <code id="loadstring">loadstring(game:HttpGet("https://raw.githubusercontent.com/celestialvesselfr/nozomi/refs/heads/main/nozomi.lua"))()</code>
+                        </div>
+                    </div>
+                    <button class="copy-btn" onclick="copyScript()">
+                        <span class="copy-text">copy</span>
+                        <span class="copy-icon">⎘</span>
                     </button>
                 </div>
-                <code id="loadstring">loadstring(game:HttpGet("https://raw.githubusercontent.com/celestialvesselfr/nozomi/refs/heads/main/nozomi.lua"))()</code>
             </div>
-            
-            <div class="notice">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="12" y1="8" x2="12" y2="12"></line>
-                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                </svg>
-                <div>
-                    <strong>note:</strong> replace the github url with your actual repository link
+        </section>
+
+        <section class="info-section" id="info">
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">⚡</div>
+                    <h4>performance</h4>
+                    <p>optimized for minimal lag</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🛡️</div>
+                    <h4>reliable</h4>
+                    <p>works on all executors</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🎨</div>
+                    <h4>customizable</h4>
+                    <p>themes and configs</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🔄</div>
+                    <h4>auto-update</h4>
+                    <p>always latest version</p>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
+
     <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <div class="footer-logo">nozomi</div>
-                    <p>modern roblox script hub</p>
-                </div>
-                <div class="footer-links">
-                    <div class="footer-column">
-                        <h4>links</h4>
-                        <a href="#features">features</a>
-                        <a href="#docs">documentation</a>
-                        <a href="https://github.com/celestialvesselfr/nozomi" target="_blank">github</a>
-                    </div>
-                    <div class="footer-column">
-                        <h4>community</h4>
-                        <a href="#discord">discord</a>
-                        <a href="#support">support</a>
-                    </div>
-                </div>
+        <div class="footer-content">
+            <div class="footer-left">
+                <span class="footer-logo">nozomi</span>
+                <span class="footer-divider">|</span>
+                <span class="footer-year">2025</span>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 nozomi. all rights reserved.</p>
+            <div class="footer-links">
+                <a href="https://github.com/celestialvesselfr/nozomi" target="_blank">github</a>
+                <span class="link-separator">/</span>
+                <a href="#script">script</a>
+                <span class="link-separator">/</span>
+                <a href="#info">info</a>
             </div>
         </div>
     </footer>
 
     <div class="toast" id="toast">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="20 6 9 17 4 12"></polyline>
-        </svg>
-        <span>copied to clipboard!</span>
+        <span class="toast-icon">✓</span>
+        <span class="toast-text">copied to clipboard</span>
     </div>
 
     <script src="script.js"></script>
