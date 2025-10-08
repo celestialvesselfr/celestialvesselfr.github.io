@@ -32,6 +32,26 @@
     </header>
 
     <main class="main">
+        <!-- Intro scrolling section -->
+        <section class="intro-section" id="intro">
+            <div class="intro-container">
+                <div class="intro-grid">
+                    <div class="intro-card">
+                        <h3 class="card-title"><span class="title-bracket">[</span> smooth ux <span class="title-bracket">]</span></h3>
+                        <p class="info-text">animated, responsive ui components inspired by your in-game gui. hover, scroll, and interact to explore.</p>
+                    </div>
+                    <div class="intro-card">
+                        <h3 class="card-title"><span class="title-bracket">[</span> real metrics <span class="title-bracket">]</span></h3>
+                        <p class="info-text">execution counts are backed by a Cloudflare Worker and KV — fast, global and reliable.</p>
+                    </div>
+                    <div class="intro-card">
+                        <h3 class="card-title"><span class="title-bracket">[</span> full control <span class="title-bracket">]</span></h3>
+                        <p class="info-text">toggles, sliders, dropdowns and keybinds are all interactive on this page.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section class="preview-section">
             <div class="preview-container">
                 <div class="preview-header">
@@ -70,6 +90,11 @@
                             </div>
                             <span class="ui-title">nozomi://@nozomi.lol — v0.1.0 (seika)</span>
                         </div>
+                        <!-- Keybind chip -->
+                        <button class="ui-keybind" id="keybind-chip" type="button" aria-label="toggle keybind">
+                            toggle ui
+                            <span class="kbd" id="keybind-display">RightShift</span>
+                        </button>
                         <div class="ui-body">
                             <div class="ui-sidebar" id="ui-sidebar">
                                 <div class="ui-tab active" data-tab="aim">
@@ -116,44 +141,44 @@
                                     
                                     <div class="setting-row">
                                         <span class="setting-label">aim mode</span>
-                                        <div class="ui-dropdown">camera ▾</div>
+                                        <div class="ui-dropdown" data-options="camera,cursor,none" data-selected="camera">camera ▾</div>
                                     </div>
                                     
                                     <div class="setting-row slider-row">
                                         <span class="setting-label">fov</span>
                                         <span class="setting-value">300</span>
                                     </div>
-                                    <div class="ui-slider">
+                                    <div class="ui-slider" data-min="0" data-max="360" data-step="1">
                                         <div class="slider-track"></div>
-                                        <div class="slider-fill" style="width: 75%"></div>
-                                        <div class="slider-thumb" style="left: 75%"></div>
+                                        <div class="slider-fill"></div>
+                                        <div class="slider-thumb"></div>
                                     </div>
                                     
                                     <div class="setting-row slider-row">
                                         <span class="setting-label">smoothness</span>
                                         <span class="setting-value">3</span>
                                     </div>
-                                    <div class="ui-slider">
+                                    <div class="ui-slider" data-min="0" data-max="10" data-step="0.1">
                                         <div class="slider-track"></div>
-                                        <div class="slider-fill" style="width: 30%"></div>
-                                        <div class="slider-thumb" style="left: 30%"></div>
+                                        <div class="slider-fill"></div>
+                                        <div class="slider-thumb"></div>
                                     </div>
                                     
                                     <div class="setting-row slider-row">
                                         <span class="setting-label">prediction</span>
                                         <span class="setting-value">0.15</span>
                                     </div>
-                                    <div class="ui-slider">
+                                    <div class="ui-slider" data-min="0" data-max="1" data-step="0.01">
                                         <div class="slider-track"></div>
-                                        <div class="slider-fill" style="width: 15%"></div>
-                                        <div class="slider-thumb" style="left: 15%"></div>
+                                        <div class="slider-fill"></div>
+                                        <div class="slider-thumb"></div>
                                     </div>
                                     
                                     <div class="section-label">targeting</div>
                                     
                                     <div class="setting-row">
                                         <span class="setting-label">target part</span>
-                                        <div class="ui-dropdown">Head ▾</div>
+                                        <div class="ui-dropdown" data-options="Head,UpperTorso,LowerTorso,HumanoidRootPart" data-selected="Head">Head ▾</div>
                                     </div>
                                     
                                     <div class="setting-row">
