@@ -206,6 +206,7 @@ body {
     transform-style: preserve-3d;
     transition: transform 0.1s ease-out;
     font-family: var(--ui-font);
+    position: relative;
 }
 
 /* UI Header */
@@ -258,7 +259,7 @@ body {
 
 .ui-preset-btn,
 .ui-theme-btn {
-    background: rgb(58, 58, 60);
+    background: var(--border);
     color: rgb(255, 255, 255);
     border: none;
     padding: 0.4rem 0.8rem;
@@ -311,7 +312,22 @@ body {
     text-decoration: none;
     position: relative;
     background: transparent;
+    border-radius: 12px; /* visual hit area */
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Active indicator - circle (collapsed) -> pill (expanded) */
+.ui-tab::before {
+    content: '';
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
+    background: var(--accent);
+    opacity: 0;
+    transform: translateY(-50%) translateZ(0);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -340,14 +356,15 @@ body {
     border-radius: 12px;
 }
 
-.ui-tab.active {
-    background: rgb(249, 38, 114);
-    color: rgb(255, 255, 255);
-    border-radius: 50%;
-}
+.ui-tab.active { color: rgb(255, 255, 255); }
 
-.ui-body.expanded .ui-tab.active {
-    border-radius: 28px;
+.ui-tab.active::before { opacity: 1; }
+
+.ui-body.expanded .ui-tab.active::before {
+    width: calc(100% - 20px);
+    height: 44px;
+    border-radius: 22px;
+    left: 10px;
 }
 
 .ui-tab.active .tab-icon {
@@ -425,7 +442,7 @@ body {
 .ui-toggle {
     width: 44px;
     height: 24px;
-    background: rgb(58, 58, 60);
+    background: var(--border);
     border-radius: 12px;
     position: relative;
     cursor: pointer;
@@ -445,25 +462,53 @@ body {
 }
 
 .ui-toggle.active {
-    background: rgb(249, 38, 114);
+    background: var(--accent);
 }
 
 .ui-toggle.active::after {
     transform: translateX(20px);
 }
 
-/* UI Dropdown */
+/* UI Dropdown (pill) */
 .ui-dropdown {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     background: rgb(44, 44, 46);
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    font-size: 13px;
-    font-weight: 500;
+    padding: 0.5rem 0.9rem;
+    border-radius: 12px;
+    font-size: clamp(12px, 0.9vw, 13px);
+    font-weight: 600;
     color: rgb(255, 255, 255);
     cursor: pointer;
-    min-width: 120px;
-    text-align: right;
+    width: max-content;
+    max-width: 100%;
+    white-space: nowrap;
+    user-select: none;
 }
+
+.dropdown-menu {
+    position: fixed;
+    background: rgb(44, 44, 46);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 10px;
+    padding: 0.25rem;
+    min-width: 160px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.45);
+    z-index: 2000;
+}
+
+.dropdown-item {
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.dropdown-item:hover { background: rgba(255,255,255,0.06); }
 
 /* UI Slider */
 .ui-slider {
@@ -503,6 +548,9 @@ body {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
+.ui-slider.dragging .slider-thumb { box-shadow: 0 0 0 6px rgba(249,38,114,0.15); }
+.ui-slider.dragging .slider-fill { filter: brightness(1.1); }
+
 /* Preview Stats */
 .preview-stats {
     display: flex;
@@ -511,6 +559,64 @@ body {
     margin-top: 3rem;
     font-family: var(--mono);
 }
+
+/* Keybind chip inside UI mockup */
+.ui-keybind {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    background: rgba(44,44,46,0.95);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.ui-keybind .kbd {
+    background: rgb(30,30,30);
+    border: 1px solid var(--border);
+    padding: 2px 6px;
+    border-radius: 6px;
+    font-weight: 800;
+}
+
+.ui-keybind.listening { animation: pulse 1s infinite; }
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(249,38,114,0.4); }
+  70% { box-shadow: 0 0 0 8px rgba(249,38,114,0); }
+  100% { box-shadow: 0 0 0 0 rgba(249,38,114,0); }
+}
+
+/* Intro section with scroll reveals */
+.intro-section {
+    min-height: 120vh;
+    display: grid;
+    place-items: center;
+    padding: 8rem 3rem 4rem;
+}
+
+.intro-container { max-width: 1100px; width: 100%; }
+
+.intro-grid { display: grid; gap: 2rem; }
+
+.intro-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+    transition: transform 700ms cubic-bezier(.2,.7,0,.9), opacity 700ms;
+}
+
+.intro-card.in-view { opacity: 1; transform: translateY(0) scale(1); }
 
 .stat-item {
     display: flex;
