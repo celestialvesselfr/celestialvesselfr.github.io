@@ -33,7 +33,7 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
 });
 
 // cloudflare worker endpoint thinfg
-const apiUrl = 'https://nozomi-counter.andrewwutech.workers.dev/count';
+const apiUrl = 'https://nozomi-counter.celestialvessel.workers.dev/count';
 
 async function loadExecutionCount() {
     let counterEl = document.getElementById('exec-count');
