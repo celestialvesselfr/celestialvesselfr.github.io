@@ -4,7 +4,7 @@ function copyScript() {
     navigator.clipboard.writeText(scriptText).then(() => {
         showToast();
     }).catch(err => {
-        console.error('Failed to copy:', err);
+        console.error('failed to copy:', err);
     });
 }
 
