@@ -1832,7 +1832,7 @@ html {
     background: var(--accent);
 }
 
-/* scrollbar for ui content area */
+/* scrollbar for ui content */
 .ui-content::-webkit-scrollbar {
     width: 6px;
 }
