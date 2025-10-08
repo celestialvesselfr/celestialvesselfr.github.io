@@ -399,11 +399,21 @@ function initSliders() {
         const decimals = (step.toString().split('.')[1] || '').length;
         const snap = (v) => Math.round(v / step) * step;
 
-        function updateVisuals(v) {
+        function updateVisuals(v, instant = false) {
             const p = clamp(percentFromValue(v), 0, 1);
+            if (instant) {
+                fill.style.transition = 'none';
+                thumb.style.transition = 'transform 0.15s, box-shadow 0.15s';
+            }
             fill.style.width = `${p * 100}%`;
             thumb.style.left = `${p * 100}%`;
             if (valueLabel) valueLabel.textContent = (decimals ? v.toFixed(decimals) : Math.round(v)).toString();
+            if (instant) {
+                requestAnimationFrame(() => {
+                    fill.style.transition = '';
+                    thumb.style.transition = '';
+                });
+            }
         }
 
         updateVisuals(value);
@@ -412,7 +422,7 @@ function initSliders() {
             const rect = slider.getBoundingClientRect();
             const x = clamp((e.clientX - rect.left) / rect.width, 0, 1);
             value = snap(min + x * (max - min));
-            updateVisuals(value);
+            updateVisuals(value, true);
         }
 
         slider.addEventListener('pointerdown', (e) => {
@@ -457,7 +467,16 @@ function initDropdowns() {
                 menu.appendChild(item);
             });
             document.body.appendChild(menu);
-            positionMenuBelow(dd, menu);
+            requestAnimationFrame(() => {
+                positionMenuBelow(dd, menu);
+                menu.style.opacity = '0';
+                menu.style.transform = 'translateY(-8px)';
+                menu.style.transition = 'opacity 0.15s, transform 0.15s';
+                requestAnimationFrame(() => {
+                    menu.style.opacity = '1';
+                    menu.style.transform = 'translateY(0)';
+                });
+            });
             openMenuEl = menu;
         });
     });
