@@ -105,6 +105,7 @@ body {
 
 .nav-item:hover {
     color: var(--accent);
+    text-shadow: 0 0 20px rgba(10,132,255,0.5);
 }
 
 .nav-item::before {
@@ -154,6 +155,19 @@ body {
     font-size: 2rem;
     font-weight: 700;
     color: var(--text);
+    position: relative;
+    display: inline-block;
+}
+
+.preview-title::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    border-radius: 2px;
 }
 
 .theme-controls {
@@ -200,13 +214,17 @@ body {
     max-width: 750px;
     margin: 0 auto;
     background: var(--bg);
-    border-radius: 12px;
+    border-radius: 14px;
     overflow: hidden;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255,255,255,0.05), 0 0 40px rgba(10,132,255,0.08);
     transform-style: preserve-3d;
-    transition: transform 0.1s ease-out;
+    transition: transform 0.1s ease-out, box-shadow 0.3s;
     font-family: var(--ui-font);
     position: relative;
+}
+
+.ui-mockup:hover {
+    box-shadow: 0 35px 90px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255,255,255,0.08), 0 0 60px rgba(10,132,255,0.12);
 }
 
 /* UI Header */
@@ -291,7 +309,7 @@ body {
 
 /* Sidebar */
 .ui-sidebar {
-    background: rgb(44, 44, 46);
+    background: var(--surface);
     padding: 1rem 0;
     display: flex;
     flex-direction: column;
@@ -299,6 +317,7 @@ body {
     gap: 0.25rem;
     transition: all 0.3s ease;
     overflow: hidden;
+    position: relative;
 }
 
 .ui-tab {
@@ -323,16 +342,16 @@ body {
 .ui-tab::before {
     content: '';
     position: absolute;
-    left: calc(1rem + 14px);
+    left: calc(1rem + 16px);
     top: 50%;
     width: 44px;
     height: 44px;
     border-radius: 50%;
     background: var(--accent);
     opacity: 0;
-    transform: translate(-50%, -50%) translateZ(0);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: -1;
+    transform: translate(-50%, -50%);
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 0;
 }
 
 .tab-icon {
@@ -368,15 +387,16 @@ body {
     color: var(--text);
 }
 
-.ui-tab.active::before { opacity: 1; }
+.ui-tab.active::before {
+    opacity: 1;
+}
 
-.ui-body.expanded .ui-tab::before {
-    left: 12px;
-    width: calc(100% - 24px);
-    height: 46px;
+.ui-body.expanded .ui-tab.active::before {
+    left: 50%;
+    width: calc(100% - 20px);
+    height: 48px;
     border-radius: 24px;
-    transform: translateY(-50%) translateZ(0);
-    background: var(--accent);
+    transform: translate(-50%, -50%);
 }
 
 .ui-tab.active .tab-icon {
@@ -474,6 +494,7 @@ body {
 
 .ui-toggle.active {
     background: var(--accent);
+    box-shadow: 0 0 12px rgba(10,132,255,0.4);
 }
 
 .ui-toggle.active::after {
@@ -505,11 +526,12 @@ body {
     background: var(--surface);
     border: 1px solid var(--border);
     color: var(--text);
-    border-radius: 10px;
-    padding: 0.25rem;
+    border-radius: 12px;
+    padding: 0.4rem;
     min-width: 160px;
-    box-shadow: 0 12px 30px rgba(0,0,0,0.45);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05);
     z-index: 2000;
+    backdrop-filter: blur(20px);
 }
 
 .dropdown-item {
@@ -541,27 +563,37 @@ body {
 .slider-fill {
     position: absolute;
     height: 4px;
-    background: rgb(249, 38, 114);
+    background: var(--accent);
     border-radius: 2px;
     top: 2px;
-    transition: width 0.2s;
+    transition: width 0.05s ease-out, background 0.2s;
 }
 
 .slider-thumb {
     position: absolute;
     width: 16px;
     height: 16px;
-    background: rgb(255, 255, 255);
+    background: var(--text);
     border-radius: 50%;
     top: -4px;
     margin-left: -8px;
     cursor: pointer;
-    transition: left 0.2s;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    transition: left 0.05s ease-out, transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
 }
 
-.ui-slider.dragging .slider-thumb { box-shadow: 0 0 0 6px rgba(249,38,114,0.15); }
-.ui-slider.dragging .slider-fill { filter: brightness(1.1); }
+.slider-thumb:hover {
+    transform: scale(1.15);
+}
+
+.ui-slider.dragging .slider-thumb {
+    box-shadow: 0 0 0 8px rgba(10,132,255,0.2), 0 4px 12px rgba(0,0,0,0.3);
+    transform: scale(1.15);
+}
+
+.ui-slider.dragging .slider-fill {
+    filter: brightness(1.15) saturate(1.1);
+}
 
 /* Preview Stats */
 .preview-stats {
@@ -574,26 +606,35 @@ body {
 
 /* Keybind chip inside UI mockup */
 .ui-keybind {
-    background: rgba(44,44,50,0.85);
+    background: var(--surface);
     border: 1px solid var(--border);
     color: var(--text);
     padding: 6px 12px;
     border-radius: 10px;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 700;
-    letter-spacing: 0.2px;
+    letter-spacing: 0.3px;
     display: inline-flex;
     align-items: center;
     gap: 6px;
     text-transform: uppercase;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.ui-keybind:hover {
+    border-color: var(--accent);
+    transform: translateY(-1px);
 }
 
 .ui-keybind .kbd {
-    background: rgb(30,30,30);
+    background: var(--bg);
     border: 1px solid var(--border);
-    padding: 2px 6px;
+    padding: 3px 8px;
     border-radius: 6px;
     font-weight: 800;
+    font-size: 10px;
+    transition: all 0.2s;
 }
 
 .ui-keybind.listening { animation: pulse 1s infinite; }
@@ -650,45 +691,69 @@ body {
 
 .intro-card {
     position: relative;
-    background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0));
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 16px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 18px;
     padding: 2.5rem;
-    backdrop-filter: blur(16px);
+    backdrop-filter: blur(20px) saturate(1.2);
     opacity: 0;
-    transform: translateY(40px) scale(0.96);
-    transition: transform 700ms cubic-bezier(.2,.7,0,.9), opacity 700ms;
+    transform: translateY(50px) scale(0.95);
+    transition: transform 800ms cubic-bezier(.16,.84,.44,1), opacity 800ms, border-color 0.3s;
     overflow: hidden;
+}
+
+.intro-card:hover {
+    border-color: rgba(10,132,255,0.3);
 }
 
 .intro-card::before {
     content: '';
     position: absolute;
-    inset: -20%;
-    background: conic-gradient(from 0deg, rgba(10,132,255,0.12), rgba(249,38,114,0.12), transparent 60%);
-    filter: blur(40px);
+    inset: -30%;
+    background: conic-gradient(from 0deg at 50% 50%, rgba(10,132,255,0.15), rgba(249,38,114,0.15), transparent 50%, transparent);
+    filter: blur(50px);
     opacity: 0;
-    transition: opacity 0.6s;
+    transition: opacity 0.8s;
+    animation: rotate 20s linear infinite;
 }
 
-.intro-card:hover::before { opacity: 1; }
+.intro-card:hover::before { opacity: 0.7; }
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
 
 .intro-card.in-view {
     opacity: 1;
     transform: translateY(0) scale(1);
 }
 
+.intro-card:nth-child(2) {
+    transition-delay: 0.1s;
+}
+
+.intro-card:nth-child(3) {
+    transition-delay: 0.2s;
+}
+
 .intro-card h3 {
-    font-size: 1.75rem;
+    font-size: 1.85rem;
     text-transform: lowercase;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+    position: relative;
+    z-index: 1;
 }
 
 .intro-card p {
     margin-top: 1.25rem;
     color: var(--text-dim);
     max-width: 42ch;
-    line-height: 1.7;
+    line-height: 1.75;
+    font-size: 0.95rem;
+    position: relative;
+    z-index: 1;
 }
 
 .stat-item {
@@ -706,7 +771,10 @@ body {
 .stat-value {
     font-size: 1.5rem;
     font-weight: 700;
-    color: var(--accent);
+    background: linear-gradient(135deg, var(--accent), rgba(10,132,255,0.7));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 /* Terminal Section */
