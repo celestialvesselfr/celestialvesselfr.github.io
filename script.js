@@ -1,4 +1,4 @@
-// copy button thing ig
+// copy button thingy
 function copyScript() {
     let txt = document.getElementById('loadstring').textContent;
     
@@ -262,8 +262,16 @@ function applyTheme(themeName) {
     root.style.setProperty('--text', `rgb(${theme.text.join(',')})`);
     root.style.setProperty('--text-dim', `rgb(${theme.secondaryText.join(',')})`);
     root.style.setProperty('--accent', `rgb(${theme.accent.join(',')})`);
+    // derived vars
     const accentHover = theme.accent.map(c => Math.min(255, c + 20));
     root.style.setProperty('--accent-hover', `rgb(${accentHover.join(',')})`);
+    root.style.setProperty('--accent-20a', `rgba(${theme.accent.join(',')}, 0.2)`);
+    root.style.setProperty('--thumb-color', `rgb(${theme.accent.join(',')})`);
+
+    // auto colorize white icons on light themes (invert to dark)
+    const luminance = ([r,g,b]) => 0.2126*r + 0.7152*g + 0.0722*b; // 0..255
+    const isLight = luminance(theme.bg) > 180 || luminance(theme.text) < 110;
+    root.style.setProperty('--img-filter', isLight ? 'invert(1)' : 'none');
     const cursorGlow = document.querySelector('.cursor-glow');
     if (cursorGlow) {
         cursorGlow.style.background = `radial-gradient(circle, rgba(${theme.accent.join(',')}, 0.15) 0%, transparent 70%)`;
@@ -301,6 +309,19 @@ function applyTheme(themeName) {
     tabs.forEach(tab => {
         tab.style.color = `rgb(${theme.secondaryText.join(',')})`;
     });
+
+    // code window theming for readability in light mode
+    if (isLight) {
+        root.style.setProperty('--code-window-bg', 'linear-gradient(135deg, rgba(0,0,0,0.03), rgba(0,0,0,0.02))');
+        root.style.setProperty('--code-border', 'rgba(0,0,0,0.10)');
+        root.style.setProperty('--code-body-bg', 'rgba(0,0,0,0.05)');
+        root.style.setProperty('--code-gutter', 'rgba(0,0,0,0.45)');
+    } else {
+        root.style.setProperty('--code-window-bg', 'linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02))');
+        root.style.setProperty('--code-border', 'rgba(255,255,255,0.12)');
+        root.style.setProperty('--code-body-bg', 'rgba(0,0,0,0.2)');
+        root.style.setProperty('--code-gutter', 'rgba(255,255,255,0.3)');
+    }
 }
 
 // 3d tilt effect for ui preview
