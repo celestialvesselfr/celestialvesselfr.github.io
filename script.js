@@ -54,7 +54,7 @@ async function loadExecutionCount() {
         }
     } catch (err) {
         console.error('counter load failed:', err);
-        // just use a fake number if it breaks
+        // just use a fake number if it breaks because im too lazy to actually add a callback since that'd require too much efford and random shit
         animateCounterTo(Math.floor(Math.random() * 50000) + 150000);
     }
 }
