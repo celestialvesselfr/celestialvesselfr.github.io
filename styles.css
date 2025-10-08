@@ -197,7 +197,7 @@ body {
 
 .ui-mockup {
     width: 100%;
-    max-width: 900px;
+    max-width: 750px;
     margin: 0 auto;
     background: rgb(30, 30, 30);
     border-radius: 12px;
@@ -278,7 +278,7 @@ body {
     display: grid;
     grid-template-columns: 70px 1fr;
     gap: 0;
-    min-height: 600px;
+    min-height: 700px;
     transition: grid-template-columns 0.3s ease;
 }
 
@@ -303,14 +303,16 @@ body {
     min-height: 56px;
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     padding: 0 1rem;
     gap: 0.75rem;
     color: rgb(152, 152, 157);
-    border-radius: 12px;
     cursor: pointer;
-    transition: all 0.2s;
     text-decoration: none;
     position: relative;
+    background: transparent;
+    border-radius: 50%;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .tab-icon {
@@ -334,9 +336,18 @@ body {
     opacity: 1;
 }
 
+.ui-body.expanded .ui-tab {
+    border-radius: 12px;
+}
+
 .ui-tab.active {
     background: rgb(249, 38, 114);
     color: rgb(255, 255, 255);
+    border-radius: 50%;
+}
+
+.ui-body.expanded .ui-tab.active {
+    border-radius: 28px;
 }
 
 .ui-tab.active .tab-icon {
@@ -351,6 +362,10 @@ body {
     background: rgba(255, 255, 255, 0.05);
 }
 
+.ui-body.expanded .ui-tab:hover:not(.active) {
+    border-radius: 12px;
+}
+
 .ui-tab:hover:not(.active) .tab-icon {
     filter: brightness(0.9);
 }
@@ -360,7 +375,7 @@ body {
     background: rgb(30, 30, 30);
     padding: 2rem;
     overflow-y: auto;
-    max-height: 600px;
+    max-height: 700px;
 }
 
 .settings-section {
@@ -941,7 +956,7 @@ body {
     
     .ui-body {
         grid-template-columns: 70px 1fr;
-        min-height: 500px;
+        min-height: 600px;
     }
     
     .ui-body.expanded {
@@ -949,7 +964,7 @@ body {
     }
     
     .ui-content {
-        max-height: 500px;
+        max-height: 600px;
     }
 }
 
@@ -1023,7 +1038,7 @@ body {
     
     .ui-content {
         padding: 1.5rem;
-        max-height: 400px;
+        max-height: 500px;
     }
     
     .preview-stats {
