@@ -1,28 +1,30 @@
+// copy button thingy
 function copyScript() {
-    const scriptText = document.getElementById('loadstring').textContent;
+    let txt = document.getElementById('loadstring').textContent;
     
-    navigator.clipboard.writeText(scriptText).then(() => {
+    navigator.clipboard.writeText(txt).then(() => {
         showToast();
     }).catch(err => {
-        console.error('Failed to copy:', err);
+        console.error('copy failed lol:', err);
     });
 }
 
 function showToast() {
-    const toast = document.getElementById('toast');
-    toast.classList.add('show');
+    let toastEl = document.getElementById('toast');
+    toastEl.classList.add('show');
     
     setTimeout(() => {
-        toast.classList.remove('show');
+        toastEl.classList.remove('show');
     }, 2500);
 }
 
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
+// smooth scrollling for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', function (e) {
         e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
+        let targetEl = document.querySelector(this.getAttribute('href'));
+        if (targetEl) {
+            targetEl.scrollIntoView({
                 behavior: 'smooth',
                 block: 'start'
             });
@@ -30,64 +32,67 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-const EXECUTION_API_URL = 'https://nozomi-counter.andrewwutech.workers.dev/count';
+// cloudflare worker endpoint thinfg
+const apiUrl = 'https://nozomi-counter.andrewwutech.workers.dev/count';
 
 async function loadExecutionCount() {
-    const counter = document.getElementById('exec-count');
-    if (EXECUTION_API_URL === 'YOUR_WORKER_URL_HERE/count') {
-        console.warn('Execution API not configured. See EXECUTION_TRACKING.md to set up Cloudflare Worker.');
+    let counterEl = document.getElementById('exec-count');
+    if (apiUrl === 'YOUR_WORKER_URL_HERE/count') {
+        console.warn('api not setup yet, using fake numbers');
         animateCounterTo(Math.floor(Math.random() * 50000) + 150000);
         return;
     }
     
     try {
-        const response = await fetch(EXECUTION_API_URL);
-        const data = await response.json();
+        let res = await fetch(apiUrl);
+        let json = await res.json();
         
-        if (data.value !== undefined) {
-            animateCounterTo(data.value);
+        if (json.value !== undefined) {
+            animateCounterTo(json.value);
         } else {
-            throw new Error('Invalid API response');
+            throw new Error('weird api response');
         }
-    } catch (error) {
-        console.error('Failed to load execution count:', error);
-        // Fallback to fake counter
+    } catch (err) {
+        console.error('counter load failed:', err);
+        // just use a fake number if it breaks
         animateCounterTo(Math.floor(Math.random() * 50000) + 150000);
     }
 }
 
-function animateCounterTo(target) {
-    const counter = document.getElementById('exec-count');
-    const duration = 2000;
-    const steps = 60;
-    const increment = target / steps;
-    let current = 0;
+// animate counter going up
+function animateCounterTo(targetNum) {
+    let counter = document.getElementById('exec-count');
+    let dur = 2000;
+    let steps = 60;
+    let inc = targetNum / steps;
+    let curr = 0;
     
-    const interval = setInterval(() => {
-        current += increment;
-        if (current >= target) {
-            counter.textContent = Math.floor(target).toLocaleString();
-            clearInterval(interval);
+    let timer = setInterval(() => {
+        curr += inc;
+        if (curr >= targetNum) {
+            counter.textContent = Math.floor(targetNum).toLocaleString();
+            clearInterval(timer);
         } else {
-            counter.textContent = Math.floor(current).toLocaleString();
+            counter.textContent = Math.floor(curr).toLocaleString();
         }
-    }, duration / steps);
+    }, dur / steps);
 }
 
-const cursorGlow = document.querySelector('.cursor-glow');
-let cursorMouseX = 0, cursorMouseY = 0;
+// cursor glow effect
+let glowEl = document.querySelector('.cursor-glow');
+let mouseX = 0, mouseY = 0;
 let glowX = 0, glowY = 0;
 
 document.addEventListener('mousemove', (e) => {
-    cursorMouseX = e.clientX;
-    cursorMouseY = e.clientY;
+    mouseX = e.clientX;
+    mouseY = e.clientY;
 });
 
 function animateGlow() {
-    glowX += (cursorMouseX - glowX) * 0.1;
-    glowY += (cursorMouseY - glowY) * 0.1;
+    glowX += (mouseX - glowX) * 0.1;
+    glowY += (mouseY - glowY) * 0.1;
     
-    cursorGlow.style.transform = `translate(${glowX - 200}px, ${glowY - 200}px)`;
+    glowEl.style.transform = `translate(${glowX - 200}px, ${glowY - 200}px)`;
     requestAnimationFrame(animateGlow);
 }
 
@@ -298,51 +303,56 @@ function applyTheme(themeName) {
     });
 }
 
-const uiPreview = document.getElementById('ui-preview');
-const mockup = document.querySelector('.ui-mockup');
-let mouseX = 0, mouseY = 0;
-let currentX = 0, currentY = 0;
+// 3d tilt effect for ui preview
+let previewEl = document.getElementById('ui-preview');
+let mockupEl = document.querySelector('.ui-mockup');
+let tiltX = 0, tiltY = 0;
+let curX = 0, curY = 0;
 
-uiPreview.addEventListener('mousemove', (e) => {
-    const rect = uiPreview.getBoundingClientRect();
-    mouseX = (e.clientX - rect.left - rect.width / 2) / (rect.width / 2);
-    mouseY = (e.clientY - rect.top - rect.height / 2) / (rect.height / 2);
+previewEl.addEventListener('mousemove', (e) => {
+    let rect = previewEl.getBoundingClientRect();
+    tiltX = (e.clientX - rect.left - rect.width / 2) / (rect.width / 2);
+    tiltY = (e.clientY - rect.top - rect.height / 2) / (rect.height / 2);
 });
 
-uiPreview.addEventListener('mouseleave', () => {
-    mouseX = 0;
-    mouseY = 0;
+previewEl.addEventListener('mouseleave', () => {
+    tiltX = 0;
+    tiltY = 0;
 });
 
 function animate3D() {
-    currentX += (mouseX - currentX) * 0.1;
-    currentY += (mouseY - currentY) * 0.1;
+    curX += (tiltX - curX) * 0.1;
+    curY += (tiltY - curY) * 0.1;
     
-    const rotateY = currentX * 15;
-    const rotateX = -currentY * 10;
+    let rotY = curX * 15;
+    let rotX = -curY * 10;
     
-    mockup.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(20px)`;
+    mockupEl.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg) translateZ(20px)`;
     
     requestAnimationFrame(animate3D);
 }
 
-const themeSelector = document.getElementById('theme-selector');
-themeSelector.addEventListener('change', (e) => {
+// theme switcher
+let themeDropdown = document.getElementById('theme-selector');
+themeDropdown.addEventListener('change', (e) => {
     applyTheme(e.target.value);
 });
-const sidebar = document.getElementById('ui-sidebar');
-const uiBody = sidebar?.parentElement;
 
-if (sidebar && uiBody) {
-    sidebar.addEventListener('mouseenter', () => {
+// sidebar expand on hover
+let sidebarEl = document.getElementById('ui-sidebar');
+let uiBody = sidebarEl?.parentElement;
+
+if (sidebarEl && uiBody) {
+    sidebarEl.addEventListener('mouseenter', () => {
         uiBody.classList.add('expanded');
     });
     
-    sidebar.addEventListener('mouseleave', () => {
+    sidebarEl.addEventListener('mouseleave', () => {
         uiBody.classList.remove('expanded');
     });
 }
 
+// init everything when page loads
 window.addEventListener('load', () => {
     loadExecutionCount();
     animateGlow();
@@ -353,11 +363,31 @@ window.addEventListener('load', () => {
     initSliders();
     initDropdowns();
     initKeybind();
+    initScrollHeader();
 });
 
+// collapse header logo on scroll
+function initScrollHeader() {
+    let header = document.querySelector('.header');
+    let lastY = 0;
+    
+    window.addEventListener('scroll', () => {
+        let scrollY = window.pageYOffset || document.documentElement.scrollTop;
+        
+        if (scrollY > 100) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+        
+        lastY = scrollY;
+    }, { passive: true });
+}
+
+// fade in intro cards when scrolling
 function initIntroObserver() {
-    const cards = document.querySelectorAll('.intro-card');
-    const section = document.querySelector('.intro-section');
+    let cards = document.querySelectorAll('.intro-card');
+    let section = document.querySelector('.intro-section');
     if (!cards.length) return;
     
     const io = new IntersectionObserver((entries) => {
@@ -377,64 +407,63 @@ function initIntroObserver() {
     }
 }
 
+// toggle switches
 function initToggles() {
-    document.querySelectorAll('.ui-toggle').forEach(t => {
-        t.addEventListener('click', () => t.classList.toggle('active'));
+    document.querySelectorAll('.ui-toggle').forEach(toggle => {
+        toggle.addEventListener('click', () => toggle.classList.toggle('active'));
     });
 }
+// slider functionality
 function initSliders() {
     document.querySelectorAll('.ui-slider').forEach(slider => {
-        const min = parseFloat(slider.dataset.min ?? '0');
-        const max = parseFloat(slider.dataset.max ?? '100');
-        const step = parseFloat(slider.dataset.step ?? '1');
-        const valueLabel = slider.previousElementSibling?.querySelector('.setting-value');
-        let value = parseFloat(valueLabel?.textContent?.trim() ?? String((min+max)/2));
-        if (isNaN(value)) value = (min + max) / 2;
+        let minVal = parseFloat(slider.dataset.min ?? '0');
+        let maxVal = parseFloat(slider.dataset.max ?? '100');
+        let stepSize = parseFloat(slider.dataset.step ?? '1');
+        let valLabel = slider.previousElementSibling?.querySelector('.setting-value');
+        let val = parseFloat(valLabel?.textContent?.trim() ?? String((minVal+maxVal)/2));
+        if (isNaN(val)) val = (minVal + maxVal) / 2;
 
-        const fill = slider.querySelector('.slider-fill');
-        const thumb = slider.querySelector('.slider-thumb');
+        let fillEl = slider.querySelector('.slider-fill');
+        let thumbEl = slider.querySelector('.slider-thumb');
 
-        const percentFromValue = (v) => (v - min) / (max - min);
-        const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
-        const decimals = (step.toString().split('.')[1] || '').length;
-        const snap = (v) => Math.round(v / step) * step;
+        let getPercent = (v) => (v - minVal) / (maxVal - minVal);
+        let clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+        let decimals = (stepSize.toString().split('.')[1] || '').length;
+        let snapToStep = (v) => Math.round(v / stepSize) * stepSize;
 
-        function updateVisuals(v, instant = false) {
-            const p = clamp(percentFromValue(v), 0, 1);
+        function updateSlider(v, instant = false) {
+            let p = clamp(getPercent(v), 0, 1);
             if (instant) {
-                fill.style.transition = 'none';
-                thumb.style.transition = 'transform 0.15s, box-shadow 0.15s';
+                fillEl.style.transition = 'none';
+                thumbEl.style.transition = 'transform 0.15s, box-shadow 0.15s';
             }
-            fill.style.width = `${p * 100}%`;
-            thumb.style.left = `${p * 100}%`;
-            if (valueLabel) valueLabel.textContent = (decimals ? v.toFixed(decimals) : Math.round(v)).toString();
+            fillEl.style.width = `${p * 100}%`;
+            thumbEl.style.left = `${p * 100}%`;
+            if (valLabel) valLabel.textContent = (decimals ? v.toFixed(decimals) : Math.round(v)).toString();
             if (instant) {
                 requestAnimationFrame(() => {
-                    fill.style.transition = '';
-                    thumb.style.transition = '';
+                    fillEl.style.transition = '';
+                    thumbEl.style.transition = '';
                 });
             }
         }
 
-        updateVisuals(value);
+        updateSlider(val);
 
-        function onPointerMove(e) {
-            const rect = slider.getBoundingClientRect();
-            const x = clamp((e.clientX - rect.left) / rect.width, 0, 1);
-            value = snap(min + x * (max - min));
-            updateVisuals(value, true);
+        function handleDrag(e) {
+            let rect = slider.getBoundingClientRect();
+            let x = clamp((e.clientX - rect.left) / rect.width, 0, 1);
+            val = snapToStep(minVal + x * (maxVal - minVal));
+            updateSlider(val, true);
         }
 
         slider.addEventListener('pointerdown', (e) => {
             slider.classList.add('dragging');
             slider.setPointerCapture(e.pointerId);
-            onPointerMove(e);
-            const move = onPointerMove;
+            const move = handleDrag;
             const up = (ev) => {
                 slider.classList.remove('dragging');
                 slider.releasePointerCapture(ev.pointerId);
-                window.removeEventListener('pointermove', move);
-                window.removeEventListener('pointerup', up);
             };
             window.addEventListener('pointermove', move);
             window.addEventListener('pointerup', up, { once: true });
@@ -442,76 +471,79 @@ function initSliders() {
     });
 }
 
-let openMenuEl = null;
-function closeOpenMenu() { if (openMenuEl) { openMenuEl.remove(); openMenuEl = null; } }
+// dropdown menus
+let currentMenu = null;
+function closeMenu() { if (currentMenu) { currentMenu.remove(); currentMenu = null; } }
 
 function initDropdowns() {
-    document.querySelectorAll('.ui-dropdown').forEach(dd => {
-        dd.addEventListener('click', (e) => {
+    document.querySelectorAll('.ui-dropdown').forEach(dropdown => {
+        dropdown.addEventListener('click', (e) => {
             e.stopPropagation();
-            closeOpenMenu();
-            const menu = document.createElement('div');
-            menu.className = 'dropdown-menu';
-            const options = (dd.dataset.options || '').split(',').map(s => s.trim()).filter(Boolean);
-            const sel = dd.dataset.selected || dd.textContent.trim();
-            options.forEach(opt => {
-                const item = document.createElement('div');
-                item.className = 'dropdown-item';
-                item.textContent = opt;
-                if (opt === sel) item.style.background = 'rgba(255,255,255,0.08)';
-                item.addEventListener('click', () => {
-                    dd.dataset.selected = opt;
-                    dd.textContent = `${opt} ▾`;
-                    closeOpenMenu();
+            closeMenu();
+            let menuEl = document.createElement('div');
+            menuEl.className = 'dropdown-menu';
+            let opts = (dropdown.dataset.options || '').split(',').map(s => s.trim()).filter(Boolean);
+            let selected = dropdown.dataset.selected || dropdown.textContent.trim();
+            opts.forEach(opt => {
+                let itemEl = document.createElement('div');
+                itemEl.className = 'dropdown-item';
+                itemEl.textContent = opt;
+                if (opt === selected) itemEl.style.background = 'rgba(255,255,255,0.08)';
+                itemEl.addEventListener('click', () => {
+                    dropdown.dataset.selected = opt;
+                    dropdown.textContent = `${opt} ▾`;
+                    closeMenu();
                 });
-                menu.appendChild(item);
+                menuEl.appendChild(itemEl);
             });
-            document.body.appendChild(menu);
+            document.body.appendChild(menuEl);
             requestAnimationFrame(() => {
-                positionMenuBelow(dd, menu);
-                menu.style.opacity = '0';
-                menu.style.transform = 'translateY(-8px)';
-                menu.style.transition = 'opacity 0.15s, transform 0.15s';
+                positionMenuBelow(dropdown, menuEl);
+                menuEl.style.opacity = '0';
+                menuEl.style.transform = 'translateY(-8px)';
+                menuEl.style.transition = 'opacity 0.15s, transform 0.15s';
                 requestAnimationFrame(() => {
-                    menu.style.opacity = '1';
-                    menu.style.transform = 'translateY(0)';
+                    menuEl.style.opacity = '1';
+                    menuEl.style.transform = 'translateY(0)';
                 });
             });
-            openMenuEl = menu;
+            currentMenu = menuEl;
         });
     });
 
-    window.addEventListener('click', closeOpenMenu);
-    window.addEventListener('scroll', () => { if (openMenuEl) closeOpenMenu(); }, { passive: true });
-    window.addEventListener('resize', () => { if (openMenuEl) closeOpenMenu(); });
+    window.addEventListener('click', closeMenu);
+    window.addEventListener('scroll', () => { if (currentMenu) closeMenu(); }, { passive: true });
+    window.addEventListener('resize', () => { if (currentMenu) closeMenu(); });
 }
 
 function positionMenuBelow(anchor, menu) {
-    const rect = anchor.getBoundingClientRect();
-    const top = rect.bottom + window.scrollY + 6;
-    let left = rect.left + window.scrollX;
-    const vw = document.documentElement.clientWidth;
-    const mw = menu.offsetWidth || 180;
-    if (left + mw + 10 > vw + window.scrollX) left = vw + window.scrollX - mw - 10;
-    menu.style.top = `${top}px`;
-    menu.style.left = `${left}px`;
+    let rect = anchor.getBoundingClientRect();
+    let topPos = rect.bottom + window.scrollY + 6;
+    let leftPos = rect.left + window.scrollX;
+    let viewportWidth = document.documentElement.clientWidth;
+    let menuWidth = menu.offsetWidth || 180;
+    if (leftPos + menuWidth + 10 > viewportWidth + window.scrollX) leftPos = viewportWidth + window.scrollX - menuWidth - 10;
+    menu.style.top = `${topPos}px`;
+    menu.style.left = `${leftPos}px`;
 }
+
+// keybind recorder
 function initKeybind() {
-    const chip = document.getElementById('keybind-chip');
-    const display = document.getElementById('keybind-display');
-    if (!chip || !display) return;
-    const stored = localStorage.getItem('nozomi_ui_keybind');
-    if (stored) display.textContent = stored;
-    chip.addEventListener('click', () => {
-        chip.classList.add('listening');
-        const handler = (e) => {
+    let chipEl = document.getElementById('keybind-chip');
+    let displayEl = document.getElementById('keybind-display');
+    if (!chipEl || !displayEl) return;
+    let savedKey = localStorage.getItem('nozomi_ui_keybind');
+    if (savedKey) displayEl.textContent = savedKey;
+    chipEl.addEventListener('click', () => {
+        chipEl.classList.add('listening');
+        let keyHandler = (e) => {
             e.preventDefault();
-            const keyName = e.key?.length ? e.key : `Key${e.keyCode}`;
-            display.textContent = keyName;
-            localStorage.setItem('nozomi_ui_keybind', keyName);
-            chip.classList.remove('listening');
-            window.removeEventListener('keydown', handler, true);
+            let key = e.key?.length ? e.key : `Key${e.keyCode}`;
+            displayEl.textContent = key;
+            localStorage.setItem('nozomi_ui_keybind', key);
+            chipEl.classList.remove('listening');
+            window.removeEventListener('keydown', keyHandler, true);
         };
-        window.addEventListener('keydown', handler, true);
+        window.addEventListener('keydown', keyHandler, true);
     });
 }
