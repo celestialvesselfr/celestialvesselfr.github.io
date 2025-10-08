@@ -344,6 +344,20 @@ themeSelector.addEventListener('change', (e) => {
     applyTheme(e.target.value);
 });
 
+// Sidebar expansion
+const sidebar = document.getElementById('ui-sidebar');
+const uiBody = sidebar?.parentElement;
+
+if (sidebar && uiBody) {
+    sidebar.addEventListener('mouseenter', () => {
+        uiBody.classList.add('expanded');
+    });
+    
+    sidebar.addEventListener('mouseleave', () => {
+        uiBody.classList.remove('expanded');
+    });
+}
+
 window.addEventListener('load', () => {
     animateCounter();
     animateGlow();
