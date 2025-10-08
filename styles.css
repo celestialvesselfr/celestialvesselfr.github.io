@@ -773,7 +773,7 @@ body {
 }
 
 .gradient-text {
-    background: linear-gradient(135deg, var(--accent) 0%, var(--secondary-text) 50%, var(--accent) 100%);
+    background: linear-gradient(135deg, var(--accent) 0%, var(--text) 50%, var(--accent) 100%);
     background-size: 200% 200%;
     -webkit-background-clip: text;
     background-clip: text;
@@ -1832,7 +1832,7 @@ html {
     background: var(--accent);
 }
 
-/* scrollbar for ui content */
+/* scrollbar for ui content area */
 .ui-content::-webkit-scrollbar {
     width: 6px;
 }
