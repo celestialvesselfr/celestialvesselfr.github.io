@@ -14,6 +14,9 @@
     --text-dim: rgb(152, 152, 157);
     --accent: rgb(10, 132, 255);
     --accent-hover: rgb(30, 150, 255);
+    /* themable helpers */
+    --img-filter: none;              /* set to brightness(0) saturate(100%) on light themes */
+    --accent-20a: rgba(10,132,255,0.2); /* JS will update per theme */
     --mono: 'Space Mono', monospace;
     --sans: 'Inter', sans-serif;
     --ui-font: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -585,7 +588,7 @@ body {
     position: absolute;
     width: 100%;
     height: 4px;
-    background: rgb(58, 58, 60);
+    background: var(--border);
     border-radius: 2px;
     top: 2px;
 }
@@ -603,7 +606,7 @@ body {
     position: absolute;
     width: 16px;
     height: 16px;
-    background: var(--text);
+    background: var(--thumb-color, var(--text));
     border-radius: 50%;
     top: -4px;
     margin-left: -8px;
@@ -617,7 +620,7 @@ body {
 }
 
 .ui-slider.dragging .slider-thumb {
-    box-shadow: 0 0 0 8px rgba(10,132,255,0.2), 0 4px 12px rgba(0,0,0,0.3);
+    box-shadow: 0 0 0 8px var(--accent-20a), 0 4px 12px rgba(0,0,0,0.3);
     transform: scale(1.15);
 }
 
@@ -768,7 +771,7 @@ body {
 
 .hero-line {
     display: block;
-    text-transform: lowercase;
+    text-transform: none;
     letter-spacing: -0.02em;
 }
 
@@ -791,6 +794,14 @@ body {
         -webkit-text-fill-color: transparent; /* safari/chromium */
         animation: gradient-shift 4s ease infinite;
     }
+}
+
+/* themable icons (white PNG/SVG assets) */
+.card-icon,
+.info-icon-img,
+.tab-icon {
+    filter: var(--img-filter);
+    transition: filter 0.2s ease;
 }
 
 /* animated gradient background */
@@ -888,13 +899,15 @@ body {
     height: 48px;
     margin-bottom: 1.25rem;
     display: block;
-    filter: brightness(1.1) drop-shadow(0 4px 12px rgba(10,132,255,0.3));
+    /* apply theme tint first so white assets invert on light bg */
+    filter: var(--img-filter) drop-shadow(0 4px 12px rgba(10,132,255,0.3));
     transition: transform 0.3s, filter 0.3s;
 }
 
 .intro-card:hover .card-icon {
     transform: translateY(-4px) scale(1.05);
-    filter: brightness(1.2) drop-shadow(0 6px 20px rgba(10,132,255,0.5));
+    /* keep theme tint then add glow */
+    filter: var(--img-filter) drop-shadow(0 6px 20px rgba(10,132,255,0.5));
 }
 
 .card-features {
@@ -1088,8 +1101,8 @@ body {
 }
 
 .code-window {
-    background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
-    border: 1px solid rgba(255,255,255,0.12);
+    background: var(--code-window-bg, linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02)));
+    border: 1px solid var(--code-border, rgba(255,255,255,0.12));
     border-radius: 16px;
     overflow: hidden;
     backdrop-filter: blur(20px);
@@ -1105,12 +1118,12 @@ body {
 }
 
 .window-header {
-    background: rgba(0,0,0,0.3);
+    background: var(--code-header-bg, rgba(0,0,0,0.3));
     padding: 0.75rem 1rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
+    border-bottom: 1px solid var(--code-header-border, rgba(255,255,255,0.05));
 }
 
 .window-dots {
@@ -1174,14 +1187,14 @@ body {
 .code-body {
     display: flex;
     padding: 1.5rem;
-    background: rgba(0,0,0,0.2);
+    background: var(--code-body-bg, rgba(0,0,0,0.2));
     font-family: var(--mono);
     font-size: 0.95rem;
     overflow-x: auto;
 }
 
 .code-gutter {
-    color: rgba(255,255,255,0.3);
+    color: var(--code-gutter, rgba(255,255,255,0.3));
     padding-right: 1.5rem;
     user-select: none;
     font-weight: 600;
@@ -1570,18 +1583,20 @@ body {
     transform: translateY(-4px);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
-
 .info-icon-img {
     width: 40px;
     height: 40px;
     margin-bottom: 1rem;
-    filter: brightness(1.1) drop-shadow(0 2px 8px rgba(10,132,255,0.25));
+    display: block;
+    /* apply theme tint first */
+    filter: var(--img-filter) drop-shadow(0 2px 8px rgba(10,132,255,0.2));
     transition: transform 0.3s, filter 0.3s;
 }
 
 .info-card:hover .info-icon-img {
     transform: translateY(-3px);
-    filter: brightness(1.2) drop-shadow(0 4px 16px rgba(10,132,255,0.4));
+    /* keep theme tint then add glow */
+    filter: var(--img-filter) drop-shadow(0 4px 16px rgba(10,132,255,0.4));
 }
 
 .info-card h4 {
