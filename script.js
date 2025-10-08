@@ -295,10 +295,6 @@ function applyTheme(themeName) {
     
     tabs.forEach(tab => {
         tab.style.color = `rgb(${theme.secondaryText.join(',')})`;
-        if (tab.classList.contains('active')) {
-            tab.style.background = `rgb(${theme.accent.join(',')})`;
-            tab.style.color = `rgb(${theme.text.join(',')})`;
-        }
     });
     
     const toggles = mockup.querySelectorAll('.ui-toggle');
@@ -376,4 +372,151 @@ window.addEventListener('load', () => {
     animateGlow();
     animate3D();
     applyTheme('dark mode');
+    initIntroObserver();
+    initToggles();
+    initSliders();
+    initDropdowns();
+    initKeybind();
 });
+
+// ----- Intro scroll reveal -----
+function initIntroObserver() {
+    const cards = document.querySelectorAll('.intro-card');
+    if (!cards.length) return;
+    const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+            if (e.isIntersecting) e.target.classList.add('in-view');
+        });
+    }, { threshold: 0.15 });
+    cards.forEach(el => io.observe(el));
+}
+
+// ----- Toggles -----
+function initToggles() {
+    document.querySelectorAll('.ui-toggle').forEach(t => {
+        t.addEventListener('click', () => t.classList.toggle('active'));
+    });
+}
+
+// ----- Sliders -----
+function initSliders() {
+    document.querySelectorAll('.ui-slider').forEach(slider => {
+        const min = parseFloat(slider.dataset.min ?? '0');
+        const max = parseFloat(slider.dataset.max ?? '100');
+        const step = parseFloat(slider.dataset.step ?? '1');
+        const valueLabel = slider.previousElementSibling?.querySelector('.setting-value');
+        let value = parseFloat(valueLabel?.textContent?.trim() ?? String((min+max)/2));
+        if (isNaN(value)) value = (min + max) / 2;
+
+        const fill = slider.querySelector('.slider-fill');
+        const thumb = slider.querySelector('.slider-thumb');
+
+        const percentFromValue = (v) => (v - min) / (max - min);
+        const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+        const decimals = (step.toString().split('.')[1] || '').length;
+        const snap = (v) => Math.round(v / step) * step;
+
+        function updateVisuals(v) {
+            const p = clamp(percentFromValue(v), 0, 1);
+            fill.style.width = `${p * 100}%`;
+            thumb.style.left = `${p * 100}%`;
+            if (valueLabel) valueLabel.textContent = (decimals ? v.toFixed(decimals) : Math.round(v)).toString();
+        }
+
+        updateVisuals(value);
+
+        function onPointerMove(e) {
+            const rect = slider.getBoundingClientRect();
+            const x = clamp((e.clientX - rect.left) / rect.width, 0, 1);
+            value = snap(min + x * (max - min));
+            updateVisuals(value);
+        }
+
+        slider.addEventListener('pointerdown', (e) => {
+            slider.classList.add('dragging');
+            slider.setPointerCapture(e.pointerId);
+            onPointerMove(e);
+            const move = onPointerMove;
+            const up = (ev) => {
+                slider.classList.remove('dragging');
+                slider.releasePointerCapture(ev.pointerId);
+                window.removeEventListener('pointermove', move);
+                window.removeEventListener('pointerup', up);
+            };
+            window.addEventListener('pointermove', move);
+            window.addEventListener('pointerup', up, { once: true });
+        });
+    });
+}
+
+// ----- Dropdowns -----
+let openMenuEl = null;
+function closeOpenMenu() { if (openMenuEl) { openMenuEl.remove(); openMenuEl = null; } }
+
+function initDropdowns() {
+    document.querySelectorAll('.ui-dropdown').forEach(dd => {
+        dd.addEventListener('click', (e) => {
+            e.stopPropagation();
+            // Close existing
+            closeOpenMenu();
+            // Build menu
+            const menu = document.createElement('div');
+            menu.className = 'dropdown-menu';
+            const options = (dd.dataset.options || '').split(',').map(s => s.trim()).filter(Boolean);
+            const sel = dd.dataset.selected || dd.textContent.trim();
+            options.forEach(opt => {
+                const item = document.createElement('div');
+                item.className = 'dropdown-item';
+                item.textContent = opt;
+                if (opt === sel) item.style.background = 'rgba(255,255,255,0.08)';
+                item.addEventListener('click', () => {
+                    dd.dataset.selected = opt;
+                    dd.textContent = `${opt} ▾`;
+                    closeOpenMenu();
+                });
+                menu.appendChild(item);
+            });
+            document.body.appendChild(menu);
+            positionMenuBelow(dd, menu);
+            openMenuEl = menu;
+        });
+    });
+
+    window.addEventListener('click', closeOpenMenu);
+    window.addEventListener('scroll', () => { if (openMenuEl) closeOpenMenu(); }, { passive: true });
+    window.addEventListener('resize', () => { if (openMenuEl) closeOpenMenu(); });
+}
+
+function positionMenuBelow(anchor, menu) {
+    const rect = anchor.getBoundingClientRect();
+    const top = rect.bottom + window.scrollY + 6;
+    let left = rect.left + window.scrollX;
+    // Constrain to viewport
+    const vw = document.documentElement.clientWidth;
+    const mw = menu.offsetWidth || 180;
+    if (left + mw + 10 > vw + window.scrollX) left = vw + window.scrollX - mw - 10;
+    menu.style.top = `${top}px`;
+    menu.style.left = `${left}px`;
+}
+
+// ----- Keybind capture -----
+function initKeybind() {
+    const chip = document.getElementById('keybind-chip');
+    const display = document.getElementById('keybind-display');
+    if (!chip || !display) return;
+    const stored = localStorage.getItem('nozomi_ui_keybind');
+    if (stored) display.textContent = stored;
+
+    chip.addEventListener('click', () => {
+        chip.classList.add('listening');
+        const handler = (e) => {
+            e.preventDefault();
+            const keyName = e.key?.length ? e.key : `Key${e.keyCode}`;
+            display.textContent = keyName;
+            localStorage.setItem('nozomi_ui_keybind', keyName);
+            chip.classList.remove('listening');
+            window.removeEventListener('keydown', handler, true);
+        };
+        window.addEventListener('keydown', handler, true);
+    });
+}
