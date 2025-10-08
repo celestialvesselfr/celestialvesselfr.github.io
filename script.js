@@ -322,6 +322,21 @@ function applyTheme(themeName) {
         root.style.setProperty('--code-body-bg', 'rgba(0,0,0,0.2)');
         root.style.setProperty('--code-gutter', 'rgba(255,255,255,0.3)');
     }
+
+    // update favicon to match theme accent color
+    updateFavicon(theme.accent);
+}
+
+// dynamic favicon that changes with theme
+function updateFavicon(accentRGB) {
+    const [r, g, b] = accentRGB;
+    const hexColor = `%23${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
+    const svg = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='75' font-size='80' fill='${hexColor}'%3E%5B %5D%3C/text%3E%3C/svg%3E`;
+    
+    let favicon = document.getElementById('favicon');
+    if (favicon) {
+        favicon.href = svg;
+    }
 }
 
 // 3d tilt effect for ui preview
