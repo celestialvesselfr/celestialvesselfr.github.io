@@ -37,13 +37,13 @@
             <div class="intro-hero">
                 <div class="hero-badge">
                     <span class="badge-dot"></span>
-                    <span class="badge-text">currently in early beta, expect bugs11!!!111! :D</span>
+                    <span class="badge-text">currently in early beta, expect bugs :D</span>
                 </div>
                 <h1 class="hero-title">
                     <span class="hero-line">next-level</span>
                     <span class="hero-line gradient-text">roblox universal script.</span>
                 </h1>
-                <p class="hero-subtitle">undetectable. powerful. the only script you'll need for closet and blatant cheating. visuals like never before seen.</p>
+                <p class="hero-subtitle">undetectable. powerful. the only script you'll need for closet and blatant cheating.</p>
                 <div class="hero-stats">
                     <div class="stat-pill">
                         <span class="pill-number" id="exec-count">0</span>
@@ -63,7 +63,7 @@
             <div class="intro-container">
                 <div class="intro-grid">
                     <div class="intro-card">
-                        <div class="card-icon">⚡</div>
+                        <img src="https://raw.githubusercontent.com/celestialvesselfr/nozomi/main/assets/performance.png" alt="performance" class="card-icon">
                         <h3 class="card-title"><span class="title-bracket">[</span> smooth ux <span class="title-bracket">]</span></h3>
                         <p class="info-text">everything that can be animated is animated (i hope). clean asf visuals like never seen before. ultra customizable too :D</p>
                         <div class="card-features">
@@ -72,7 +72,7 @@
                         </div>
                     </div>
                     <div class="intro-card">
-                        <div class="card-icon">📊</div>
+                        <img src="https://raw.githubusercontent.com/celestialvesselfr/nozomi/main/assets/reliable.png" alt="reliable" class="card-icon">
                         <h3 class="card-title"><span class="title-bracket">[</span> reliable <span class="title-bracket">]</span></h3>
                         <p class="info-text">high compatability... i think. (should work with most execs with filesystem functionality). also should be undetectable with the right settings ＼（＾▽＾）／</p>
                         <div class="card-features">
@@ -82,7 +82,7 @@
                         </div>
                     </div>
                     <div class="intro-card">
-                        <div class="card-icon">🎮</div>
+                        <img src="https://raw.githubusercontent.com/celestialvesselfr/nozomi/main/assets/palette.png" alt="customizable" class="card-icon">
                         <h3 class="card-title"><span class="title-bracket">[</span> full control <span class="title-bracket">]</span></h3>
                         <p class="info-text">you have full control over (almost) every component, every module, and everything that can be controlled is customizable.</p>
                         <div class="card-features">
@@ -243,59 +243,73 @@
                         </div>
                     </div>
                 </div>
-                
-                <div class="preview-stats">
-                    <div class="stat-item">
-                        <span class="stat-label">executions:</span>
-                        <span class="stat-value" id="exec-count">calculating...</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-label">games:</span>
-                        <span class="stat-value">3 (more coming soon :D)</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-label">uptime:</span>
-                        <span class="stat-value">24/7</span>
-                    </div>
-                </div>
             </div>
         </section>
 
         <section class="script-section" id="script">
             <div class="script-container">
-                <div class="section-header">
-                    <h2 class="section-number">[01]</h2>
-                    <h3 class="section-heading">get started</h3>
+                <div class="script-hero">
+                    <div class="script-badge">
+                        <span class="badge-pulse"></span>
+                        <span>ready to execute</span>
+                    </div>
+                    <h2 class="script-title">
+                        <span class="script-title-line">one line.</span>
+                        <span class="script-title-line gradient-text">infinite possibilities.</span>
+                    </h2>
+                    <p class="script-subtitle">copy the loadstring, paste it into your executor, and watch the magic happen.</p>
                 </div>
                 
-                <div class="instructions">
-                    <div class="instruction-item">
-                        <span class="instruction-num">1.</span>
-                        <span class="instruction-text">open your executor</span>
-                    </div>
-                    <div class="instruction-item">
-                        <span class="instruction-num">2.</span>
-                        <span class="instruction-text">copy paste the loadstring below</span>
-                    </div>
-                    <div class="instruction-item">
-                        <span class="instruction-num">3.</span>
-                        <span class="instruction-text">execute and profit</span>
+                <div class="code-showcase">
+                    <div class="code-window">
+                        <div class="window-header">
+                            <div class="window-dots">
+                                <span></span><span></span><span></span>
+                            </div>
+                            <span class="window-title">executor.lua</span>
+                            <div class="window-actions">
+                                <button class="copy-btn-new" onclick="copyScript()">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                    </svg>
+                                    <span>copy</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="code-body">
+                            <div class="code-gutter">1</div>
+                            <div class="code-line">
+                                <span class="code-func">loadstring</span><span class="code-punc">(</span><span class="code-var">game</span><span class="code-punc">:</span><span class="code-func">HttpGet</span><span class="code-punc">(</span><span class="code-str" id="loadstring">"https://raw.githubusercontent.com/celestialvesselfr/nozomi/refs/heads/main/nozomi.lua"</span><span class="code-punc">))()</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="code-container">
-                    <div class="code-box">
-                        <div class="code-line-numbers">
-                            <span>1</span>
-                        </div>
-                        <div class="code-content">
-                            <code id="loadstring">loadstring(game:HttpGet("https://raw.githubusercontent.com/celestialvesselfr/nozomi/refs/heads/main/nozomi.lua"))()</code>
+                <div class="quick-steps">
+                    <div class="step-card">
+                        <div class="step-number">01</div>
+                        <div class="step-content">
+                            <h4>launch executor</h4>
+                            <p>open your favorite roblox executor</p>
                         </div>
                     </div>
-                    <button class="copy-btn" onclick="copyScript()">
-                        <span class="copy-text">copy</span>
-                        <span class="copy-icon">⎘</span>
-                    </button>
+                    <div class="step-divider">→</div>
+                    <div class="step-card">
+                        <div class="step-number">02</div>
+                        <div class="step-content">
+                            <h4>paste & run</h4>
+                            <p>copy the code and hit execute</p>
+                        </div>
+                    </div>
+                    <div class="step-divider">→</div>
+                    <div class="step-card">
+                        <div class="step-number">03</div>
+                        <div class="step-content">
+                            <h4>dominate</h4>
+                            <p>configure and start winning</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -303,22 +317,22 @@
         <section class="info-section" id="info">
             <div class="info-grid">
                 <div class="info-card">
-                    <div class="info-icon">⚡</div>
+                    <img src="https://raw.githubusercontent.com/celestialvesselfr/nozomi/main/assets/performance.png" alt="performance" class="info-icon-img">
                     <h4>performance</h4>
                     <p>optimized for minimal lag</p>
                 </div>
                 <div class="info-card">
-                    <div class="info-icon">🛡️</div>
+                    <img src="https://raw.githubusercontent.com/celestialvesselfr/nozomi/main/assets/reliable.png" alt="reliable" class="info-icon-img">
                     <h4>reliable (ish)</h4>
                     <p>works on most execs, i think...</p>
                 </div>
                 <div class="info-card">
-                    <div class="info-icon">🎨</div>
+                    <img src="https://raw.githubusercontent.com/celestialvesselfr/nozomi/main/assets/palette.png" alt="customizable" class="info-icon-img">
                     <h4>customizable</h4>
                     <p>custom themes and configs system</p>
                 </div>
                 <div class="info-card">
-                    <div class="info-icon">🔄</div>
+                    <img src="https://raw.githubusercontent.com/celestialvesselfr/nozomi/main/assets/update.png" alt="auto-update" class="info-icon-img">
                     <h4>auto update</h4>
                     <p>so u always get latest version</p>
                 </div>
@@ -332,6 +346,8 @@
                 <span class="footer-logo">nozomi</span>
                 <span class="footer-divider">|</span>
                 <span class="footer-year">2025</span>
+                <span class="footer-divider">|</span>
+                <span class="footer-credits">made with ♡ by celestialvessel and other random ppl</span>
             </div>
             <div class="footer-links">
                 <a href="https://github.com/celestialvesselfr/nozomi" target="_blank">github</a>
