@@ -1,4 +1,4 @@
-// copy button thingy
+// copy button thing ig
 function copyScript() {
     let txt = document.getElementById('loadstring').textContent;
     
