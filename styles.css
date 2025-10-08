@@ -1,9 +1,11 @@
+/* basic reset */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* theme colors and stuf */
 :root {
     --bg: rgb(30, 30, 30);
     --surface: rgb(44, 44, 46);
@@ -27,6 +29,7 @@ body {
     transition: background 0.3s, color 0.3s;
 }
 
+/* cursore glow effect that follow mouse */
 .cursor-glow {
     position: fixed;
     width: 400px;
@@ -39,7 +42,7 @@ body {
     transition: transform 0.2s ease, background 0.3s;
 }
 
-/* Header */
+/* header / navbar */
 .header {
     position: fixed;
     top: 0;
@@ -56,6 +59,7 @@ body {
     transition: background 0.3s, border-color 0.3s;
 }
 
+/* logo and version tag */
 .logo-section {
     display: flex;
     align-items: center;
@@ -67,7 +71,11 @@ body {
     color: var(--accent);
     font-size: 1.5rem;
     font-weight: 700;
-    transition: color 0.3s;
+    transition: color 0.3s, margin 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.header.scrolled .logo-bracket:first-of-type {
+    margin-right: 0;
 }
 
 .logo-text {
@@ -75,7 +83,17 @@ body {
     font-size: 1.5rem;
     font-weight: 700;
     letter-spacing: -0.02em;
-    transition: color 0.3s;
+    transition: color 0.3s, max-width 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s, margin 0.4s;
+    display: inline-block;
+    max-width: 200px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.header.scrolled .logo-text {
+    max-width: 0;
+    opacity: 0;
+    margin: 0;
 }
 
 .version-tag {
@@ -86,9 +104,22 @@ body {
     font-size: 0.75rem;
     font-weight: 400;
     margin-left: 0.5rem;
-    transition: background 0.3s, color 0.3s;
+    transition: background 0.3s, color 0.3s, max-width 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s, margin 0.4s, padding 0.4s;
+    display: inline-block;
+    max-width: 200px;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
+/* hide text when scrolled */
+.header.scrolled .version-tag {
+    max-width: 0;
+    opacity: 0;
+    margin-left: 0;
+    padding: 0;
+}
+
+/* navigation links */
 .nav {
     display: flex;
     gap: 2rem;
@@ -123,13 +154,13 @@ body {
     width: 100%;
 }
 
-/* Main */
+/* main content wrapper */
 .main {
     padding-top: 5rem;
     min-height: 100vh;
 }
 
-/* Preview Section */
+/* ui preview section */
 .preview-section {
     min-height: 100vh;
     display: flex;
@@ -227,7 +258,7 @@ body {
     box-shadow: 0 35px 90px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255,255,255,0.08), 0 0 60px rgba(10,132,255,0.12);
 }
 
-/* UI Header */
+/* ui mockup header bar */
 .ui-header {
     background: var(--surface);
     padding: 0.75rem 1rem;
@@ -294,7 +325,7 @@ body {
     background: rgb(10, 132, 255);
 }
 
-/* UI Body */
+/* main ui body with sidebar */
 .ui-body {
     display: grid;
     grid-template-columns: 70px 1fr;
@@ -307,7 +338,7 @@ body {
     grid-template-columns: 220px 1fr;
 }
 
-/* Sidebar */
+/* collapsible sidebar */
 .ui-sidebar {
     background: var(--surface);
     padding: 1rem 0;
@@ -338,7 +369,7 @@ body {
     overflow: visible;
 }
 
-/* Active indicator - circle (collapsed) -> pill (expanded) */
+/* active indicator transforms from circle to pill */
 .ui-tab::before {
     content: '';
     position: absolute;
@@ -416,7 +447,7 @@ body {
 .ui-tab:hover:not(.active) .tab-icon { filter: brightness(1); }
 .ui-tab:hover:not(.active) .tab-label { color: var(--text); }
 
-/* Content Area */
+/* right side content area */
 .ui-content {
     background: var(--bg);
     padding: 2rem;
@@ -468,8 +499,7 @@ body {
     font-weight: 700;
 }
 
-/* UI Toggle */
-
+/* toggle switch component */
 .ui-toggle {
     width: 44px;
     height: 24px;
@@ -501,7 +531,7 @@ body {
     transform: translateX(20px);
 }
 
-/* UI Dropdown (pill) */
+/* dropdown selector */
 .ui-dropdown {
     position: relative;
     display: inline-flex;
@@ -544,7 +574,7 @@ body {
 
 .dropdown-item:hover { background: rgba(255,255,255,0.08); }
 
-/* UI Slider */
+/* slider component */
 .ui-slider {
     position: relative;
     height: 8px;
@@ -595,7 +625,7 @@ body {
     filter: brightness(1.15) saturate(1.1);
 }
 
-/* Preview Stats */
+/* stats below preview (removed now) */
 .preview-stats {
     display: flex;
     justify-content: center;
@@ -604,7 +634,7 @@ body {
     font-family: var(--mono);
 }
 
-/* Keybind chip inside UI mockup */
+/* keybind recorder chip */
 .ui-keybind {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -645,7 +675,7 @@ body {
   100% { box-shadow: 0 0 0 0 rgba(249,38,114,0); }
 }
 
-/* Intro section with scroll reveals */
+/* intro section with scroll animations */
 .intro-section {
     position: relative;
     min-height: 140vh;
@@ -687,7 +717,7 @@ body {
     transform: translate3d(calc(var(--intro-shift-x) * 0.45), calc(var(--intro-shift-y) * 0.65), 0);
 }
 
-/* Hero Section */
+/* hero banner */
 .intro-hero {
     text-align: center;
     max-width: 900px;
@@ -703,20 +733,20 @@ body {
     align-items: center;
     gap: 0.5rem;
     padding: 0.5rem 1.25rem;
-    background: rgba(10,132,255,0.1);
-    border: 1px solid rgba(10,132,255,0.3);
+    background: color-mix(in srgb, var(--accent) 10%, transparent);
+    border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
     border-radius: 50px;
     font-size: 0.8rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: rgba(10,132,255,1);
+    color: var(--accent);
 }
 
 .badge-dot {
     width: 6px;
     height: 6px;
-    background: rgba(10,132,255,1);
+    background: var(--accent);
     border-radius: 50%;
     animation: pulse-dot 2s ease-in-out infinite;
 }
@@ -743,7 +773,7 @@ body {
 }
 
 .gradient-text {
-    background: linear-gradient(135deg, #0a84ff 0%, #5ac8fa 50%, #0a84ff 100%);
+    background: linear-gradient(135deg, var(--accent) 0%, var(--secondary-text) 50%, var(--accent) 100%);
     background-size: 200% 200%;
     -webkit-background-clip: text;
     background-clip: text;
@@ -751,11 +781,13 @@ body {
     animation: gradient-shift 4s ease infinite;
 }
 
+/* animated gradient background */
 @keyframes gradient-shift {
     0%, 100% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
 }
 
+/* subtitle text */
 .hero-subtitle {
     font-size: 1.25rem;
     color: var(--text-dim);
@@ -863,20 +895,20 @@ body {
 .feature-tag {
     display: inline-block;
     padding: 0.35rem 0.75rem;
-    background: rgba(10,132,255,0.08);
-    border: 1px solid rgba(10,132,255,0.2);
+    background: color-mix(in srgb, var(--accent) 8%, transparent);
+    border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
     border-radius: 8px;
     font-size: 0.7rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: rgba(10,132,255,0.9);
+    color: var(--accent);
     transition: all 0.2s;
 }
 
 .feature-tag:hover {
-    background: rgba(10,132,255,0.15);
-    border-color: rgba(10,132,255,0.4);
+    background: color-mix(in srgb, var(--accent) 15%, transparent);
+    border-color: color-mix(in srgb, var(--accent) 40%, transparent);
     transform: translateY(-2px);
 }
 
@@ -922,7 +954,7 @@ body {
 }
 
 .title-bracket {
-    color: rgba(10,132,255,0.6);
+    color: color-mix(in srgb, var(--accent) 60%, transparent);
     font-weight: 800;
 }
 
@@ -985,20 +1017,20 @@ body {
     align-items: center;
     gap: 0.5rem;
     padding: 0.5rem 1.25rem;
-    background: rgba(10,200,100,0.1);
-    border: 1px solid rgba(10,200,100,0.3);
+    background: color-mix(in srgb, var(--accent) 10%, transparent);
+    border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
     border-radius: 50px;
     font-size: 0.75rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: rgba(10,200,100,1);
+    color: var(--accent);
 }
 
 .badge-pulse {
     width: 6px;
     height: 6px;
-    background: rgba(10,200,100,1);
+    background: var(--accent);
     border-radius: 50%;
     animation: pulse-glow 2s ease-in-out infinite;
 }
@@ -1007,12 +1039,12 @@ body {
     0%, 100% {
         opacity: 1;
         transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(10,200,100,0.7);
+        box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 70%, transparent);
     }
     50% {
         opacity: 0.8;
         transform: scale(1.2);
-        box-shadow: 0 0 0 4px rgba(10,200,100,0);
+        box-shadow: 0 0 0 4px transparent;
     }
 }
 
@@ -1102,9 +1134,9 @@ body {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    background: rgba(10,132,255,0.15);
-    border: 1px solid rgba(10,132,255,0.3);
-    color: rgba(10,132,255,1);
+    background: color-mix(in srgb, var(--accent) 15%, transparent);
+    border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+    color: var(--accent);
     padding: 0.5rem 1rem;
     border-radius: 8px;
     font-size: 0.8rem;
@@ -1116,10 +1148,10 @@ body {
 }
 
 .copy-btn-new:hover {
-    background: rgba(10,132,255,0.25);
-    border-color: rgba(10,132,255,0.5);
+    background: color-mix(in srgb, var(--accent) 25%, transparent);
+    border-color: color-mix(in srgb, var(--accent) 50%, transparent);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(10,132,255,0.3);
+    box-shadow: 0 4px 12px color-mix(in srgb, var(--accent) 30%, transparent);
 }
 
 .copy-btn-new svg {
@@ -1148,10 +1180,10 @@ body {
     white-space: nowrap;
 }
 
-.code-func { color: #0a84ff; font-weight: 600; }
-.code-var { color: #5ac8fa; }
-.code-str { color: #30d158; }
-.code-punc { color: rgba(255,255,255,0.7); }
+.code-func { color: var(--accent); font-weight: 600; }
+.code-var { color: var(--secondary-text); }
+.code-str { color: var(--accent); filter: brightness(1.2); }
+.code-punc { color: var(--text); opacity: 0.7; }
 
 .quick-steps {
     display: flex;
@@ -1206,11 +1238,11 @@ body {
 
 .step-divider {
     font-size: 2rem;
-    color: rgba(10,132,255,0.4);
+    color: color-mix(in srgb, var(--accent) 40%, transparent);
     font-weight: 300;
 }
 
-/* Terminal Section */
+/* terminal commands section (unused?) */
 .terminal-section {
     min-height: 100vh;
     display: grid;
@@ -1305,7 +1337,7 @@ body {
     font-weight: 700;
 }
 
-/* Floating Card */
+/* floating card thingy */
 .floating-card {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -1428,7 +1460,7 @@ body {
     color: var(--text-dim);
 }
 
-/* Code Container */
+/* code block wrapper */
 .code-container {
     position: relative;
 }
@@ -1500,7 +1532,7 @@ body {
     font-size: 1.2rem;
 }
 
-/* Info Section */
+/* info cards at bottom */
 .info-section {
     padding: 6rem 3rem;
 }
@@ -1552,7 +1584,7 @@ body {
     font-size: 0.9rem;
 }
 
-/* Footer */
+/* footer bar */
 .footer {
     border-top: 1px solid var(--border);
     padding: 2rem 3rem;
@@ -1603,7 +1635,7 @@ body {
     color: var(--border);
 }
 
-/* Toast */
+/* toast notification popup */
 .toast {
     position: fixed;
     bottom: 2rem;
@@ -1635,7 +1667,7 @@ body {
     font-size: 1.2rem;
 }
 
-/* Responsive */
+/* mobile/tablet breakpoints */
 @media (max-width: 1024px) {
     .terminal-section {
         grid-template-columns: 1fr;
@@ -1769,18 +1801,18 @@ body {
     }
 }
 
-/* Smooth scroll */
+/* smooth scrolling */
 html {
     scroll-behavior: smooth;
 }
 
-/* Selection */
+/* text selection color */
 ::selection {
     background: var(--accent);
     color: var(--text);
 }
 
-/* Scrollbar */
+/* custom scrollbar styling */
 ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
@@ -1799,7 +1831,7 @@ html {
     background: var(--accent);
 }
 
-/* Custom scrollbar for UI content */
+/* scrollbar for ui content area */
 .ui-content::-webkit-scrollbar {
     width: 6px;
 }
