@@ -32,47 +32,116 @@
     </header>
 
     <main class="main">
-        <section class="terminal-section">
-            <div class="terminal-window">
-                <div class="terminal-header">
-                    <div class="terminal-dots">
-                        <span></span><span></span><span></span>
+        <section class="preview-section">
+            <div class="preview-container">
+                <div class="preview-header">
+                    <h2 class="preview-title">ui preview</h2>
+                    <div class="theme-controls">
+                        <label class="theme-label">theme:</label>
+                        <select id="theme-selector" class="theme-selector">
+                            <option value="dark mode">dark mode</option>
+                            <option value="light mode">light mode</option>
+                            <option value="vs code dark">vs code dark</option>
+                            <option value="dracula">dracula</option>
+                            <option value="nord">nord</option>
+                            <option value="monokai">monokai</option>
+                            <option value="monkeytype dark">monkeytype dark</option>
+                            <option value="monkeytype light">monkeytype light</option>
+                            <option value="monkeytype 9009">monkeytype 9009</option>
+                            <option value="sakura light">sakura light</option>
+                            <option value="sakura dark">sakura dark</option>
+                            <option value="soft pastel">soft pastel</option>
+                            <option value="soft pastel dark">soft pastel dark</option>
+                            <option value="soft mint">soft mint</option>
+                            <option value="soft mint dark">soft mint dark</option>
+                            <option value="soft lavender">soft lavender</option>
+                            <option value="soft lavender dark">soft lavender dark</option>
+                            <option value="soft blue">soft blue</option>
+                            <option value="soft blue dark">soft blue dark</option>
+                        </select>
                     </div>
-                    <div class="terminal-title">nozomi.sh</div>
                 </div>
-                <div class="terminal-body">
-                    <div class="terminal-line">
-                        <span class="prompt">$</span>
-                        <span class="command">./nozomi --info</span>
-                    </div>
-                    <div class="terminal-output">
-                        <p><span class="output-label">name:</span> nozomi</p>
-                        <p><span class="output-label">type:</span> universal script hub</p>
-                        <p><span class="output-label">games:</span> 50+ supported</p>
-                        <p><span class="output-label">status:</span> <span class="status-active">active</span></p>
-                        <p><span class="output-label">executions:</span> <span id="exec-count">calculating...</span></p>
-                    </div>
-                    <div class="terminal-line">
-                        <span class="prompt">$</span>
-                        <span class="command typing-animation">ready to execute_</span>
+                
+                <div class="ui-preview-3d" id="ui-preview">
+                    <div class="ui-mockup">
+                        <div class="ui-header">
+                            <div class="ui-dots">
+                                <span></span><span></span><span></span>
+                            </div>
+                            <span class="ui-title">nozomi</span>
+                            <div class="ui-header-buttons">
+                                <button class="ui-preset-btn">presets</button>
+                                <button class="ui-theme-btn">theme</button>
+                            </div>
+                        </div>
+                        <div class="ui-body">
+                            <div class="ui-sidebar">
+                                <div class="ui-tab active">combat</div>
+                                <div class="ui-tab">render</div>
+                                <div class="ui-tab">movement</div>
+                                <div class="ui-tab">exploit</div>
+                                <div class="ui-tab">client</div>
+                            </div>
+                            <div class="ui-content">
+                                <div class="ui-search">
+                                    <span class="ui-search-text">quick search ( / )...</span>
+                                </div>
+                                <div class="ui-modules">
+                                    <div class="ui-module">
+                                        <div class="module-info">
+                                            <div class="module-name">aim assist</div>
+                                            <div class="module-desc">smart targeting</div>
+                                        </div>
+                                        <div class="module-toggle"></div>
+                                    </div>
+                                    <div class="ui-module">
+                                        <div class="module-info">
+                                            <div class="module-name">esp</div>
+                                            <div class="module-desc">visual information</div>
+                                        </div>
+                                        <div class="module-toggle active"></div>
+                                    </div>
+                                    <div class="ui-module">
+                                        <div class="module-info">
+                                            <div class="module-name">silent aim</div>
+                                            <div class="module-desc">hit detection</div>
+                                        </div>
+                                        <div class="module-toggle"></div>
+                                    </div>
+                                    <div class="ui-module">
+                                        <div class="module-info">
+                                            <div class="module-name">auto shoot</div>
+                                            <div class="module-desc">automatic firing</div>
+                                        </div>
+                                        <div class="module-toggle active"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ui-inspector">
+                                <div class="inspector-title">inspector</div>
+                                <div class="inspector-content">
+                                    <div class="inspector-text">select a module to edit settings.</div>
+                                    <div class="inspector-empty">no module selected.</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            
-            <div class="floating-card">
-                <h2 class="card-title">
-                    <span class="title-bracket">{'</span>
-                    features
-                    <span class="title-bracket">'}</span>
-                </h2>
-                <ul class="feature-list">
-                    <li><span class="bullet">→</span> auto-updating ui library</li>
-                    <li><span class="bullet">→</span> game-specific modules</li>
-                    <li><span class="bullet">→</span> theme customization</li>
-                    <li><span class="bullet">→</span> asset caching system</li>
-                    <li><span class="bullet">→</span> cross-executor support</li>
-                    <li><span class="bullet">→</span> config save/load</li>
-                </ul>
+                
+                <div class="preview-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">executions:</span>
+                        <span class="stat-value" id="exec-count">calculating...</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">games:</span>
+                        <span class="stat-value">50+</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">uptime:</span>
+                        <span class="stat-value">24/7</span>
+                    </div>
+                </div>
             </div>
         </section>
 
