@@ -226,64 +226,86 @@ function applyTheme(themeName) {
     const theme = themes[themeName];
     if (!theme) return;
     
+    // Update CSS variables for the entire site
+    const root = document.documentElement;
+    root.style.setProperty('--bg', `rgb(${theme.bg.join(',')})`);
+    root.style.setProperty('--surface', `rgb(${theme.surface.join(',')})`);
+    root.style.setProperty('--border', `rgb(${theme.border.join(',')})`);
+    root.style.setProperty('--text', `rgb(${theme.text.join(',')})`);
+    root.style.setProperty('--text-dim', `rgb(${theme.secondaryText.join(',')})`);
+    root.style.setProperty('--accent', `rgb(${theme.accent.join(',')})`);
+    
+    // Calculate hover color (lighter version of accent)
+    const accentHover = theme.accent.map(c => Math.min(255, c + 20));
+    root.style.setProperty('--accent-hover', `rgb(${accentHover.join(',')})`);
+    
+    // Update cursor glow
+    const cursorGlow = document.querySelector('.cursor-glow');
+    if (cursorGlow) {
+        cursorGlow.style.background = `radial-gradient(circle, rgba(${theme.accent.join(',')}, 0.15) 0%, transparent 70%)`;
+    }
+    
+    // Update UI mockup specific elements
     const mockup = document.querySelector('.ui-mockup');
     const header = mockup.querySelector('.ui-header');
     const sidebar = mockup.querySelector('.ui-sidebar');
     const content = mockup.querySelector('.ui-content');
-    const inspector = mockup.querySelector('.ui-inspector');
     const tabs = mockup.querySelectorAll('.ui-tab');
-    const search = mockup.querySelector('.ui-search');
-    const modules = mockup.querySelectorAll('.ui-module');
-    const themeBtn = mockup.querySelector('.ui-theme-btn');
-    const presetBtn = mockup.querySelector('.ui-preset-btn');
     
-    // Apply colors
     mockup.style.background = `rgb(${theme.bg.join(',')})`;
     header.style.background = `rgb(${theme.surface.join(',')})`;
     header.style.borderBottomColor = `rgb(${theme.border.join(',')})`;
     sidebar.style.background = `rgb(${theme.surface.join(',')})`;
     content.style.background = `rgb(${theme.bg.join(',')})`;
-    inspector.style.background = `rgb(${theme.surface.join(',')})`;
-    inspector.style.borderLeftColor = `rgb(${theme.border.join(',')})`;
-    search.style.background = `rgb(${theme.surface.join(',')})`;
-    themeBtn.style.background = `rgb(${theme.accent.join(',')})`;
-    presetBtn.style.background = `rgb(${theme.border.join(',')})`;
     
     const titleEl = mockup.querySelector('.ui-title');
     titleEl.style.color = `rgb(${theme.secondaryText.join(',')})`;
     
-    const searchText = mockup.querySelector('.ui-search-text');
-    searchText.style.color = `rgb(${theme.secondaryText.join(',')})`;
+    const sectionLabels = mockup.querySelectorAll('.section-label');
+    sectionLabels.forEach(label => {
+        label.style.color = `rgb(${theme.secondaryText.join(',')})`;
+    });
     
-    const inspectorTitle = mockup.querySelector('.inspector-title');
-    inspectorTitle.style.color = `rgb(${theme.text.join(',')})`;
+    const settingLabels = mockup.querySelectorAll('.setting-label');
+    settingLabels.forEach(label => {
+        label.style.color = `rgb(${theme.text.join(',')})`;
+    });
     
-    const inspectorText = mockup.querySelectorAll('.inspector-text, .inspector-empty');
-    inspectorText.forEach(el => {
-        el.style.color = `rgb(${theme.secondaryText.join(',')})`;
+    const settingValues = mockup.querySelectorAll('.setting-value');
+    settingValues.forEach(value => {
+        value.style.color = `rgb(${theme.accent.join(',')})`;
     });
     
     tabs.forEach(tab => {
         tab.style.color = `rgb(${theme.secondaryText.join(',')})`;
         if (tab.classList.contains('active')) {
-            tab.style.background = `rgb(${theme.border.join(',')})`;
+            tab.style.background = `rgb(${theme.accent.join(',')})`;
             tab.style.color = `rgb(${theme.text.join(',')})`;
         }
     });
     
-    modules.forEach(module => {
-        module.style.background = `rgb(${theme.surface.join(',')})`;
-        const name = module.querySelector('.module-name');
-        const desc = module.querySelector('.module-desc');
-        const toggle = module.querySelector('.module-toggle');
-        
-        name.style.color = `rgb(${theme.text.join(',')})`;
-        desc.style.color = `rgb(${theme.secondaryText.join(',')})`;
+    const toggles = mockup.querySelectorAll('.ui-toggle');
+    toggles.forEach(toggle => {
         toggle.style.background = `rgb(${theme.border.join(',')})`;
-        
         if (toggle.classList.contains('active')) {
             toggle.style.background = `rgb(${theme.accent.join(',')})`;
         }
+    });
+    
+    const dropdowns = mockup.querySelectorAll('.ui-dropdown');
+    dropdowns.forEach(dropdown => {
+        dropdown.style.background = `rgb(${theme.surface.join(',')})`;
+        dropdown.style.color = `rgb(${theme.text.join(',')})`;
+    });
+    
+    const sliderFills = mockup.querySelectorAll('.slider-fill');
+    sliderFills.forEach(fill => {
+        fill.style.background = `rgb(${theme.accent.join(',')})`;
+    });
+    
+    const sliderTracks = mockup.querySelectorAll('.slider-track');
+    sliderTracks.forEach(track => {
+        track.style.background = `rgb(${theme.border.join(',')})`;
     });
 }
 
