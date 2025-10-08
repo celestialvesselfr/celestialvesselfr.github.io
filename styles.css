@@ -777,6 +777,7 @@ body {
     background-size: 200% 200%;
     -webkit-background-clip: text;
     background-clip: text;
+    color: transparent;
     -webkit-text-fill-color: transparent;
     animation: gradient-shift 4s ease infinite;
 }
