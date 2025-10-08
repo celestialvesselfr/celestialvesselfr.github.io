@@ -50,23 +50,281 @@ function animateCounter() {
 }
 
 const cursorGlow = document.querySelector('.cursor-glow');
-let mouseX = 0, mouseY = 0;
+let cursorMouseX = 0, cursorMouseY = 0;
 let glowX = 0, glowY = 0;
 
 document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
+    cursorMouseX = e.clientX;
+    cursorMouseY = e.clientY;
 });
 
 function animateGlow() {
-    glowX += (mouseX - glowX) * 0.1;
-    glowY += (mouseY - glowY) * 0.1;
+    glowX += (cursorMouseX - glowX) * 0.1;
+    glowY += (cursorMouseY - glowY) * 0.1;
     
     cursorGlow.style.transform = `translate(${glowX - 200}px, ${glowY - 200}px)`;
     requestAnimationFrame(animateGlow);
 }
 
+// Theme data from UI library
+const themes = {
+    "dark mode": {
+        bg: [30, 30, 30],
+        surface: [44, 44, 46],
+        accent: [10, 132, 255],
+        text: [255, 255, 255],
+        secondaryText: [152, 152, 157],
+        border: [58, 58, 60]
+    },
+    "light mode": {
+        bg: [245, 245, 247],
+        surface: [255, 255, 255],
+        accent: [0, 122, 255],
+        text: [28, 28, 30],
+        secondaryText: [142, 142, 147],
+        border: [209, 209, 214]
+    },
+    "vs code dark": {
+        bg: [30, 30, 30],
+        surface: [37, 37, 38],
+        accent: [0, 122, 204],
+        text: [212, 212, 212],
+        secondaryText: [150, 150, 150],
+        border: [60, 60, 60]
+    },
+    "dracula": {
+        bg: [40, 42, 54],
+        surface: [68, 71, 90],
+        accent: [189, 147, 249],
+        text: [248, 248, 242],
+        secondaryText: [139, 233, 253],
+        border: [68, 71, 90]
+    },
+    "nord": {
+        bg: [46, 52, 64],
+        surface: [59, 66, 82],
+        accent: [136, 192, 208],
+        text: [236, 239, 244],
+        secondaryText: [216, 222, 233],
+        border: [76, 86, 106]
+    },
+    "monokai": {
+        bg: [39, 40, 34],
+        surface: [73, 72, 62],
+        accent: [249, 38, 114],
+        text: [248, 248, 242],
+        secondaryText: [117, 113, 94],
+        border: [73, 72, 62]
+    },
+    "monkeytype dark": {
+        bg: [50, 52, 55],
+        surface: [44, 46, 49],
+        accent: [226, 183, 20],
+        text: [209, 208, 197],
+        secondaryText: [136, 134, 125],
+        border: [58, 61, 65]
+    },
+    "monkeytype light": {
+        bg: [246, 245, 244],
+        surface: [255, 255, 255],
+        accent: [226, 183, 20],
+        text: [44, 46, 49],
+        secondaryText: [100, 101, 105],
+        border: [224, 222, 217]
+    },
+    "monkeytype 9009": {
+        bg: [237, 232, 225],
+        surface: [218, 210, 202],
+        accent: [180, 139, 125],
+        text: [75, 74, 71],
+        secondaryText: [130, 127, 122],
+        border: [200, 193, 186]
+    },
+    "sakura light": {
+        bg: [245, 240, 230],
+        surface: [255, 239, 210],
+        accent: [255, 122, 144],
+        text: [62, 47, 45],
+        secondaryText: [120, 100, 95],
+        border: [231, 213, 189]
+    },
+    "sakura dark": {
+        bg: [38, 34, 32],
+        surface: [58, 46, 44],
+        accent: [255, 122, 144],
+        text: [235, 220, 210],
+        secondaryText: [180, 160, 150],
+        border: [80, 62, 58]
+    },
+    "soft pastel": {
+        bg: [249, 245, 250],
+        surface: [255, 250, 255],
+        accent: [203, 166, 247],
+        text: [88, 76, 95],
+        secondaryText: [152, 136, 162],
+        border: [232, 220, 238]
+    },
+    "soft pastel dark": {
+        bg: [42, 38, 50],
+        surface: [58, 52, 70],
+        accent: [203, 166, 247],
+        text: [236, 225, 245],
+        secondaryText: [186, 175, 195],
+        border: [82, 74, 96]
+    },
+    "soft mint": {
+        bg: [244, 250, 248],
+        surface: [250, 255, 252],
+        accent: [134, 205, 186],
+        text: [75, 95, 88],
+        secondaryText: [125, 145, 138],
+        border: [220, 238, 232]
+    },
+    "soft mint dark": {
+        bg: [34, 48, 44],
+        surface: [46, 62, 57],
+        accent: [134, 205, 186],
+        text: [214, 235, 228],
+        secondaryText: [164, 185, 178],
+        border: [74, 102, 94]
+    },
+    "soft lavender": {
+        bg: [248, 246, 255],
+        surface: [255, 251, 255],
+        accent: [186, 157, 255],
+        text: [82, 72, 110],
+        secondaryText: [132, 122, 160],
+        border: [228, 221, 250]
+    },
+    "soft lavender dark": {
+        bg: [43, 38, 59],
+        surface: [58, 52, 78],
+        accent: [186, 157, 255],
+        text: [230, 223, 255],
+        secondaryText: [180, 173, 205],
+        border: [84, 75, 115]
+    },
+    "soft blue": {
+        bg: [242, 248, 255],
+        surface: [250, 254, 255],
+        accent: [132, 176, 255],
+        text: [68, 92, 128],
+        secondaryText: [118, 142, 178],
+        border: [212, 225, 245]
+    },
+    "soft blue dark": {
+        bg: [32, 42, 58],
+        surface: [44, 56, 74],
+        accent: [132, 176, 255],
+        text: [217, 230, 255],
+        secondaryText: [167, 180, 205],
+        border: [64, 76, 94]
+    }
+};
+
+function applyTheme(themeName) {
+    const theme = themes[themeName];
+    if (!theme) return;
+    
+    const mockup = document.querySelector('.ui-mockup');
+    const header = mockup.querySelector('.ui-header');
+    const sidebar = mockup.querySelector('.ui-sidebar');
+    const content = mockup.querySelector('.ui-content');
+    const inspector = mockup.querySelector('.ui-inspector');
+    const tabs = mockup.querySelectorAll('.ui-tab');
+    const search = mockup.querySelector('.ui-search');
+    const modules = mockup.querySelectorAll('.ui-module');
+    const themeBtn = mockup.querySelector('.ui-theme-btn');
+    const presetBtn = mockup.querySelector('.ui-preset-btn');
+    
+    // Apply colors
+    mockup.style.background = `rgb(${theme.bg.join(',')})`;
+    header.style.background = `rgb(${theme.surface.join(',')})`;
+    header.style.borderBottomColor = `rgb(${theme.border.join(',')})`;
+    sidebar.style.background = `rgb(${theme.surface.join(',')})`;
+    content.style.background = `rgb(${theme.bg.join(',')})`;
+    inspector.style.background = `rgb(${theme.surface.join(',')})`;
+    inspector.style.borderLeftColor = `rgb(${theme.border.join(',')})`;
+    search.style.background = `rgb(${theme.surface.join(',')})`;
+    themeBtn.style.background = `rgb(${theme.accent.join(',')})`;
+    presetBtn.style.background = `rgb(${theme.border.join(',')})`;
+    
+    const titleEl = mockup.querySelector('.ui-title');
+    titleEl.style.color = `rgb(${theme.secondaryText.join(',')})`;
+    
+    const searchText = mockup.querySelector('.ui-search-text');
+    searchText.style.color = `rgb(${theme.secondaryText.join(',')})`;
+    
+    const inspectorTitle = mockup.querySelector('.inspector-title');
+    inspectorTitle.style.color = `rgb(${theme.text.join(',')})`;
+    
+    const inspectorText = mockup.querySelectorAll('.inspector-text, .inspector-empty');
+    inspectorText.forEach(el => {
+        el.style.color = `rgb(${theme.secondaryText.join(',')})`;
+    });
+    
+    tabs.forEach(tab => {
+        tab.style.color = `rgb(${theme.secondaryText.join(',')})`;
+        if (tab.classList.contains('active')) {
+            tab.style.background = `rgb(${theme.border.join(',')})`;
+            tab.style.color = `rgb(${theme.text.join(',')})`;
+        }
+    });
+    
+    modules.forEach(module => {
+        module.style.background = `rgb(${theme.surface.join(',')})`;
+        const name = module.querySelector('.module-name');
+        const desc = module.querySelector('.module-desc');
+        const toggle = module.querySelector('.module-toggle');
+        
+        name.style.color = `rgb(${theme.text.join(',')})`;
+        desc.style.color = `rgb(${theme.secondaryText.join(',')})`;
+        toggle.style.background = `rgb(${theme.border.join(',')})`;
+        
+        if (toggle.classList.contains('active')) {
+            toggle.style.background = `rgb(${theme.accent.join(',')})`;
+        }
+    });
+}
+
+// 3D tilt effect
+const uiPreview = document.getElementById('ui-preview');
+const mockup = document.querySelector('.ui-mockup');
+let mouseX = 0, mouseY = 0;
+let currentX = 0, currentY = 0;
+
+uiPreview.addEventListener('mousemove', (e) => {
+    const rect = uiPreview.getBoundingClientRect();
+    mouseX = (e.clientX - rect.left - rect.width / 2) / (rect.width / 2);
+    mouseY = (e.clientY - rect.top - rect.height / 2) / (rect.height / 2);
+});
+
+uiPreview.addEventListener('mouseleave', () => {
+    mouseX = 0;
+    mouseY = 0;
+});
+
+function animate3D() {
+    currentX += (mouseX - currentX) * 0.1;
+    currentY += (mouseY - currentY) * 0.1;
+    
+    const rotateY = currentX * 15;
+    const rotateX = -currentY * 10;
+    
+    mockup.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(20px)`;
+    
+    requestAnimationFrame(animate3D);
+}
+
+// Theme selector
+const themeSelector = document.getElementById('theme-selector');
+themeSelector.addEventListener('change', (e) => {
+    applyTheme(e.target.value);
+});
+
 window.addEventListener('load', () => {
     animateCounter();
     animateGlow();
+    animate3D();
+    applyTheme('dark mode');
 });
