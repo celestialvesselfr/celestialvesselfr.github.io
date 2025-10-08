@@ -4,7 +4,7 @@ function copyScript() {
     navigator.clipboard.writeText(scriptText).then(() => {
         showToast();
     }).catch(err => {
-        console.error('failed to copy:', err);
+        console.error('Failed to copy:', err);
     });
 }
 
@@ -296,30 +296,6 @@ function applyTheme(themeName) {
     tabs.forEach(tab => {
         tab.style.color = `rgb(${theme.secondaryText.join(',')})`;
     });
-    
-    const toggles = mockup.querySelectorAll('.ui-toggle');
-    toggles.forEach(toggle => {
-        toggle.style.background = `rgb(${theme.border.join(',')})`;
-        if (toggle.classList.contains('active')) {
-            toggle.style.background = `rgb(${theme.accent.join(',')})`;
-        }
-    });
-    
-    const dropdowns = mockup.querySelectorAll('.ui-dropdown');
-    dropdowns.forEach(dropdown => {
-        dropdown.style.background = `rgb(${theme.surface.join(',')})`;
-        dropdown.style.color = `rgb(${theme.text.join(',')})`;
-    });
-    
-    const sliderFills = mockup.querySelectorAll('.slider-fill');
-    sliderFills.forEach(fill => {
-        fill.style.background = `rgb(${theme.accent.join(',')})`;
-    });
-    
-    const sliderTracks = mockup.querySelectorAll('.slider-track');
-    sliderTracks.forEach(track => {
-        track.style.background = `rgb(${theme.border.join(',')})`;
-    });
 }
 
 const uiPreview = document.getElementById('ui-preview');
@@ -379,26 +355,33 @@ window.addEventListener('load', () => {
     initKeybind();
 });
 
-// ----- Intro scroll reveal -----
 function initIntroObserver() {
     const cards = document.querySelectorAll('.intro-card');
+    const section = document.querySelector('.intro-section');
     if (!cards.length) return;
+    
     const io = new IntersectionObserver((entries) => {
         entries.forEach((e) => {
             if (e.isIntersecting) e.target.classList.add('in-view');
         });
     }, { threshold: 0.15 });
     cards.forEach(el => io.observe(el));
+    if (section) {
+        section.addEventListener('mousemove', (e) => {
+            const rect = section.getBoundingClientRect();
+            const x = (e.clientX - rect.left - rect.width / 2) / 15;
+            const y = (e.clientY - rect.top - rect.height / 2) / 15;
+            section.style.setProperty('--intro-shift-x', `${x}px`);
+            section.style.setProperty('--intro-shift-y', `${y}px`);
+        });
+    }
 }
 
-// ----- Toggles -----
 function initToggles() {
     document.querySelectorAll('.ui-toggle').forEach(t => {
         t.addEventListener('click', () => t.classList.toggle('active'));
     });
 }
-
-// ----- Sliders -----
 function initSliders() {
     document.querySelectorAll('.ui-slider').forEach(slider => {
         const min = parseFloat(slider.dataset.min ?? '0');
@@ -449,7 +432,6 @@ function initSliders() {
     });
 }
 
-// ----- Dropdowns -----
 let openMenuEl = null;
 function closeOpenMenu() { if (openMenuEl) { openMenuEl.remove(); openMenuEl = null; } }
 
@@ -457,9 +439,7 @@ function initDropdowns() {
     document.querySelectorAll('.ui-dropdown').forEach(dd => {
         dd.addEventListener('click', (e) => {
             e.stopPropagation();
-            // Close existing
             closeOpenMenu();
-            // Build menu
             const menu = document.createElement('div');
             menu.className = 'dropdown-menu';
             const options = (dd.dataset.options || '').split(',').map(s => s.trim()).filter(Boolean);
@@ -491,22 +471,18 @@ function positionMenuBelow(anchor, menu) {
     const rect = anchor.getBoundingClientRect();
     const top = rect.bottom + window.scrollY + 6;
     let left = rect.left + window.scrollX;
-    // Constrain to viewport
     const vw = document.documentElement.clientWidth;
     const mw = menu.offsetWidth || 180;
     if (left + mw + 10 > vw + window.scrollX) left = vw + window.scrollX - mw - 10;
     menu.style.top = `${top}px`;
     menu.style.left = `${left}px`;
 }
-
-// ----- Keybind capture -----
 function initKeybind() {
     const chip = document.getElementById('keybind-chip');
     const display = document.getElementById('keybind-display');
     if (!chip || !display) return;
     const stored = localStorage.getItem('nozomi_ui_keybind');
     if (stored) display.textContent = stored;
-
     chip.addEventListener('click', () => {
         chip.classList.add('listening');
         const handler = (e) => {
