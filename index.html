@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="nozomi - some random modern roblox script hub with advanced features (i think)">
     <meta name="keywords" content="roblox, script, executor, nozomi, game">
-    <meta property="og:title" content="nozomi">
+    <meta property="og:title" content="nozomi://@nozomi.lol">
     <meta property="og:description" content="some random modern-ish and highly customizable universal roblox script hub with unique visuals, i think.">
     <meta property="og:type" content="website">
     <title>nozomi</title>
@@ -16,10 +16,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@300;400;600&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- cursor glow that follows mouse ig -->
     <div class="cursor-glow"></div>
-    
-    <!-- main header/navbar -->
     <header class="header">
         <div class="logo-section">
             <span class="logo-bracket">[</span>
@@ -33,9 +30,7 @@
             <a href="https://github.com/celestialvesselfr/nozomi" class="nav-item" data-text="github">github</a>
         </nav>
     </header>
-
     <main class="main">
-        <!-- hero section -->
         <section class="intro-section" id="intro">
             <div class="intro-hero">
                 <div class="hero-badge">
@@ -62,7 +57,6 @@
                     </div>
                 </div>
             </div>
-            
             <!-- feature cards -->
             <div class="intro-container">
                 <div class="intro-grid">
@@ -316,6 +310,112 @@
                             <p>configure settings and start rising fr</p>
                         </div>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- faq section -->
+        <section class="faq-section">
+            <div class="faq-container">
+                <div class="faq-header">
+                    <span class="faq-badge">
+                        <span class="faq-badge-dot"></span>
+                        frequently asked questions
+                    </span>
+                    <h2 class="faq-title">got questions? we got <span class="gradient-text">answers.</span></h2>
+                </div>
+                
+                <div class="faq-grid">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span class="faq-icon">[?]</span>
+                            <h3>what executors does this work on?</h3>
+                        </div>
+                        <div class="faq-answer">
+                            <p>any executor that at least has file system functionality. this is basically every executor right now. also, nozomi does work on lower unc external execs like solara (havent tested on xeno but should work) so uh yeah... future features might not work on lower unc executors though.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span class="faq-icon">[?]</span>
+                            <h3>is this detected? will i get banned?</h3>
+                        </div>
+                        <div class="faq-answer">
+                            <p>okay lets be fr. the script itself? probably to some degree (especially on advanced anticheats), but most likely not enough to cause an in game ban unless you abuse blatant modules (speed, fly, etc) too much. please note that most desktop (windows) based executors are detected, so i'd use an alt unless you're on mac, where ud options like hydrogen exist.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span class="faq-icon">[?]</span>
+                            <h3>how do i change the theme?</h3>
+                        </div>
+                        <div class="faq-answer">
+                            <p>once you execute the script, open the UI and navigate to the "theme" tab. there you'll find some pre-made themes to choose from. you can also customize individual colors, adjust UI transparency, and change fonts with even more customization coming soon. all settings can be saved to your executor's workspace folder.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span class="faq-icon">[?]</span>
+                            <h3>what games are supported?</h3>
+                        </div>
+                        <div class="faq-answer">
+                            <p>nozomi is a universal script hub, so most core features (aimbot, esp, and movement to some degree) should work in fps/combat games. we also have game-specific modules for blade ball, gunfight arena, and 99 nights at the moment. more game specific modules are coming soon (if you got some good game suggestions dm me on discord: xqtn_ im running out of ideas)</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span class="faq-icon">[?]</span>
+                            <h3>how do i report bugs or request features?</h3>
+                        </div>
+                        <div class="faq-answer">
+                            <p>dm me on discord: xqtn_. please tell me which executor you're using, steps to recreate the bug(s), and screenshots/videos of the bug.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span class="faq-icon">[?]</span>
+                            <h3>does it auto-update?</h3>
+                        </div>
+                        <div class="faq-answer">
+                            <p>yes. the loadstring pulls directly from github, so you automatically get the latest version every time you execute. the UI library is cached locally for faster load times, but it checks for updates every time a new version hash is detected. you can force the script to download the ui library again by deleting the "nozomi_cache" folder in your executor's workspace folder.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span class="faq-icon">[?]</span>
+                            <h3>why is it called "nozomi"?</h3>
+                        </div>
+                        <div class="faq-answer">
+                            <p>because well... nozomi literally means "hope" or "wish" in japanese. as for why i named it this?... uh... its complicated, but basically it's because i'm getting ghosted for 2 weeks and counting as of writing this, and im kinda clinging onto that small hope/wish... yeah, its complicated, but ig it might be worth sharing about here.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span class="faq-icon">[?]</span>
+                            <h3>is it free? is there a key system? and if it is, why is it free?</h3>
+                        </div>
+                        <div class="faq-answer">
+                            <p>yeah this script is completely free to use, currently i don't have any plans to directly monetize it. as of right now, there's no key system, but i might decide to add one in the future (dont worry, it'll have extremely long key lengths, so you only have to do it once every like... week or two. i am not greedy asf unlike some other devs. i just need enough to renew this domain.) as for why it's free? its because this is essentially fully a passion project. i got bored one day and i decided to start making this.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span class="faq-icon">[?]</span>
+                            <h3>is this safe? and is it open source?</h3>
+                        </div>
+                        <div class="faq-answer">
+                            <p>kinda depends on what you say "safe" is. the actual code behind nozomi is not malicious. we only collect data such as executor, if the script loaded successfully, and basic post requests to update our execution counter. nothing personally identifiable is collected. we do NOT log your ip directly, however since we use cloudflare as protection, they might log your ip, but only the region is viewable. we cannot view your ip. also, no. nozomi is closed source.</p>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </section>
