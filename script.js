@@ -1,12 +1,24 @@
 // copy button thingy
 function copyScript() {
-    let txt = document.getElementById('loadstring').textContent;
-    
-    navigator.clipboard.writeText(txt).then(() => {
-        showToast();
-    }).catch(err => {
-        console.error('copy failed lol:', err);
-    });
+	const loadstringEl = document.getElementById('loadstring');
+	if (!loadstringEl) {
+		console.error('loadstring element not found');
+		return;
+	}
+
+	let rawText = loadstringEl.textContent.trim();
+	if (loadstringEl.dataset && loadstringEl.dataset.url) {
+		rawText = loadstringEl.dataset.url.trim();
+	}
+
+	const cleanedUrl = rawText.replace(/^"+|"+$/g, '');
+	const script = `loadstring(game:HttpGet("${cleanedUrl}"))()`;
+	
+	navigator.clipboard.writeText(script).then(() => {
+		showToast();
+	}).catch(err => {
+		console.error('copy failed lol:', err);
+	});
 }
 
 function showToast() {
