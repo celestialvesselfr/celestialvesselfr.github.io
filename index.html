@@ -1,0 +1,298 @@
+<!--
+hi what are you doing here
+-->
+
+<!DOCTYPE html>
+<html lang="en" class="antialiased">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>「✦」nozunesw</title>
+    <link rel="icon" type="image/svg+xml" href="assets/nozune_softworks_white.svg">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100..400&family=Manrope:wght@200;400;500;800&display=swap"
+        rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+    <!-- Lenis CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/lenis@1.1.20/dist/lenis.css">
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                fontFamily: {
+                    sans: ['Manrope', 'sans-serif'],
+                    mono: ['JetBrains Mono', 'monospace'],
+                    space: ['Space Grotesk', 'sans-serif'],
+                },
+                extend: {
+                    colors: {
+                        brand: {
+                            black: '#080808',
+                            dark: '#121212',
+                            light: '#f4f4f4',
+                            white: '#ffffff',
+                            accent: '#3b82f6' // subtle blue, rarely used
+                        }
+                    },
+                    spacing: {
+                        '128': '32rem',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="bg-grid relative">
+    <!-- Custom Cursor -->
+    <div id="cursor"></div>
+
+    <!-- Preloader -->
+    <div id="preloader"
+        class="fixed inset-0 bg-brand-black flex flex-col items-center justify-center transition-colors duration-500">
+        <div class="relative w-64 h-16 border border-white/10 overflow-hidden">
+            <div id="loader-bar" class="absolute top-0 left-0 h-full bg-white w-0"></div>
+            <div class="absolute inset-0 flex items-center justify-between px-4 mix-blend-difference">
+                <span class="font-mono text-xs uppercase tracking-widest text-white">...</span>
+                <span id="loader-text" class="font-mono text-xs text-white">0%</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 w-full z-50 glass px-6 py-4 flex justify-between items-center transition-all duration-300"
+        id="navbar">
+        <!-- Logo -->
+        <a href="#" class="group flex items-center gap-3">
+            <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"
+                class="w-10 h-10">
+                <rect x="30" y="30" width="40" height="40" stroke="currentColor" stroke-width="2"
+                    class="text-current origin-center rotate-[35deg] transition-colors duration-500" />
+                <path d="M50 20 L55 45 L80 50 L55 55 L50 80 L45 55 L20 50 L45 45 Z" fill="currentColor"
+                    class="text-current origin-center rotate-[20deg] transition-transform duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:rotate-[200deg]" />
+            </svg>
+            <div id="logo-text" class="flex items-baseline leading-none select-none relative">
+                <span class="font-sans font-normal text-xl tracking-tight">nozune</span>
+                <span class="font-sans font-thin text-xl tracking-tight opacity-70 flex">
+                    s<span class="logo-collapse overflow-hidden inline-block">oft</span>w<span
+                        class="logo-collapse overflow-hidden inline-block">orks</span>
+                </span>
+            </div>
+        </a>
+
+        <!-- Logo Tooltip -->
+        <div id="logo-tooltip"
+            class="fixed pointer-events-none z-[110] opacity-0 flex items-center gap-2 px-3 py-1.5 bg-[var(--text-color)] text-[var(--bg-color)] rounded-sm transform -translate-x-1/2 -translate-y-1/2 border border-[var(--bg-color)]">
+            <div class="w-1.5 h-1.5 bg-[var(--bg-color)]"></div>
+            <span class="font-mono text-[10px] uppercase tracking-wide font-bold">Return Home</span>
+        </div>
+        </a>
+
+        <!-- Theme Toggle -->
+        <button id="theme-toggle"
+            class="flex items-center gap-2 font-mono text-xs border border-transparent hover:border-current px-3 py-1 transition-all">
+            <span id="theme-text">LIGHT MODE</span>
+            <div class="w-2 h-2 bg-current"></div>
+        </button>
+    </nav>
+
+    <!-- Lenis Wrapper -->
+    <div id="smooth-wrapper">
+        <div id="smooth-content">
+
+            <!-- Hero Section -->
+            <section class="min-h-screen flex flex-col justify-center px-6 pt-24 relative overflow-hidden">
+                <div
+                    class="absolute top-1/4 right-10 w-64 h-64 border border-current opacity-5 rotate-12 decorative-shape">
+                </div>
+                <div class="absolute bottom-20 left-20 w-32 h-32 border border-cur
+                    rent opacity-5 -rotate-12 decorative-shape">
+                </div>
+
+                <div class="max-w-7xl mx-auto w-full z-10">
+                    <p class="font-mono text-xs mb-4 overflow-hidden"><span class="reveal-text block">EST. 09/25</span>
+                    </p>
+
+                    <h1
+                        class="text-6xl md:text-8xl lg:text-9xl font-space leading-none tracking-tighter mb-8 mix-blend-overlay opacity-90">
+                        <div class="overflow-hidden"><span class="hero-line block">We do</span></div>
+                        <div class="overflow-hidden"><span class="hero-line block">code.</span></div>
+                        <div class="overflow-hidden"><span class="hero-line block text-stroke">Elegantly.</span></div>
+                    </h1>
+
+                    <div
+                        class="flex flex-col md:flex-row justify-between items-end mt-12 border-t border-current/20 pt-6">
+                        <div class="max-w-md">
+                            <p class="font-sans text-lg md:text-xl font-light opacity-80 reveal-p">
+                                We craft minimalist software solutions with a focus on motion, utility, and aesthetic
+                                precision.
+                            </p>
+                        </div>
+                        <div class="mt-8 md:mt-0 font-mono text-xs text-right opacity-60 reveal-p">
+                            SCROLL TO INITIALIZE<br>
+                            ↓
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- About Section (Horizontal Typewriter) -->
+            <section id="about" class="h-screen w-full flex items-center overflow-hidden bg-current/5 relative">
+                <div id="about-container"
+                    class="flex items-center pl-[10vw] pr-[10vw] whitespace-nowrap will-change-transform">
+                    <h2 id="about-text"
+                        class="font-sans text-[15vh] md:text-[20vh] font-bold leading-none tracking-tighter text-transparent stroke-text">
+                        We reject the generic. Software is an art form. Precision in every pixel. Motion with purpose.
+                        Function over fluff.
+                    </h2>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="absolute bottom-12 left-12 right-12 h-[1px] bg-current/10">
+                    <div id="about-progress-bar" class="h-full bg-current w-0"></div>
+                </div>
+            </section>
+
+            <!-- Projects Section (Stacked Cards) -->
+            <section id="projects" class="relative py-24 px-4 md:px-12 bg-current/5 min-h-[150vh]">
+                <div class="max-w-7xl mx-auto h-full flex flex-col">
+                    <div class="mb-12 flex items-end justify-between pb-4 relative">
+                        <h2 class="text-4xl md:text-6xl font-bold tracking-tighter">SELECTED WORKS</h2>
+                        <span class="font-mono text-sm opacity-60">01 — 03</span>
+                        <!-- Progress Bar -->
+                        <div class="absolute bottom-0 left-0 w-full h-[1px] bg-current/20">
+                            <div id="projects-progress" class="h-full bg-current w-0"></div>
+                        </div>
+                    </div>
+
+                    <!-- Stacking Context -->
+                    <div id="cards-wrapper" class="relative w-full h-[600px] grid place-items-center perspective-1000">
+
+                        <!-- Card 1 -->
+                        <div class="card-wrapper col-start-1 row-start-1 w-full max-w-3xl h-[450px] md:h-[500px]">
+                            <div
+                                class="project-card w-full h-full glass p-8 md:p-12 flex flex-col justify-between border-t-4 border-current hover:border-brand-accent transition-colors duration-300">
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center gap-4">
+                                        <h3 class="text-3xl md:text-4xl font-bold uppercase">placeholder</h3>
+                                        <div class="card-stats font-mono text-[10px] opacity-40">INIT_COORDS</div>
+                                    </div>
+                                    <svg class="w-8 h-8 opacity-50" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5"
+                                            d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="font-mono text-xs mb-4 opacity-60">??? / ??? / ???</p>
+                                    <p class="font-sans text-lg opacity-80">A placeholder.</p>
+                                </div>
+                                <div
+                                    class="absolute -right-4 -bottom-4 font-mono text-9xl opacity-5 select-none pointer-events-none">
+                                    01</div>
+                            </div>
+                        </div>
+
+                        <!-- Card 2 -->
+                        <div class="card-wrapper col-start-1 row-start-1 w-full max-w-3xl h-[450px] md:h-[500px]">
+                            <div class="project-card w-full h-full glass p-8 md:p-12 flex flex-col justify-between border-t-4 border-current hover:border-brand-accent transition-colors duration-300"
+                                style="background-color: var(--card-bg)">
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center gap-4">
+                                        <h3 class="text-3xl md:text-4xl font-bold uppercase">placeholder</h3>
+                                        <div class="card-stats font-mono text-[10px] opacity-40">INIT_COORDS</div>
+                                    </div>
+                                    <svg class="w-8 h-8 opacity-50" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5"
+                                            d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="font-mono text-xs mb-4 opacity-60">?? / ?? / ??</p>
+                                    <p class="font-sans text-lg opacity-80">A placeholder.</p>
+                                </div>
+                                <div
+                                    class="absolute -right-4 -bottom-4 font-mono text-9xl opacity-5 select-none pointer-events-none">
+                                    02</div>
+                            </div>
+                        </div>
+
+                        <!-- Card 3 -->
+                        <div class="card-wrapper col-start-1 row-start-1 w-full max-w-3xl h-[450px] md:h-[500px]">
+                            <div class="project-card w-full h-full glass p-8 md:p-12 flex flex-col justify-between border-t-4 border-current hover:border-brand-accent transition-colors duration-300"
+                                style="background-color: var(--card-bg)">
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center gap-4">
+                                        <h3 class="text-3xl md:text-4xl font-bold uppercase">placeholder</h3>
+                                        <div class="card-stats font-mono text-[10px] opacity-40">INIT_COORDS</div>
+                                    </div>
+                                    <svg class="w-8 h-8 opacity-50" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5"
+                                            d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="font-mono text-xs mb-4 opacity-60">??? / ??? / ???</p>
+                                    <p class="font-sans text-lg opacity-80">A placeholder.</p>
+                                </div>
+                                <div
+                                    class="absolute -right-4 -bottom-4 font-mono text-9xl opacity-5 select-none pointer-events-none">
+                                    03</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="py-12 px-6 md:px-12 border-t border-current/10">
+                <div class="flex flex-col md:flex-row justify-between items-end">
+                    <div>
+                        <h4 class="text-2xl font-bold tracking-tight mb-2">nozune<span
+                                class="font-thin">softworks</span></h4>
+                        <p class="font-mono text-xs opacity-60">proudly australian.</p>
+                    </div>
+                    <div class="mt-8 md:mt-0 flex gap-6">
+                        <a href="https://github.com/celestialvesselfr" target="_blank" rel="noopener noreferrer"
+                            class="font-mono text-xs hover:underline decoration-1 underline-offset-4">GITHUB</a>
+                        <a href="https://gitlab.com/yknozune" target="_blank" rel="noopener noreferrer"
+                            class="font-mono text-xs hover:underline decoration-1 underline-offset-4">GITLAB</a>
+                        <a href="https://discord.com/users/921977010845286420" target="_blank" rel="noopener noreferrer"
+                            class="font-mono text-xs hover:underline decoration-1 underline-offset-4">DISCORD</a>
+                    </div>
+                </div>
+                <div class="mt-12 flex justify-between items-center text-[10px] font-mono opacity-40">
+                    <span>&copy; 2025 nozune softworks. all rights reserved.</span>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Fluid Canvas -->
+    <canvas id="fluid-canvas"
+        class="fixed top-0 left-0 w-full h-full pointer-events-none z-[100] mix-blend-screen blur-[50px] opacity-80"></canvas>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Draggable.min.js"></script>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

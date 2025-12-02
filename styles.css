@@ -1,0 +1,131 @@
+/*
+hi what are you doing here
+*/
+
+* {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+:root {
+    --bg-color: #080808;
+    --text-color: #f4f4f4;
+    --glass-bg: rgba(20, 20, 20, 0.4);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --grid-color: rgba(255, 255, 255, 0.03);
+    --ruler-color: rgba(255, 255, 255, 0.2);
+    --card-bg: #1a1a1a;
+}
+
+html.light {
+    --bg-color: #e5e5e5;
+    --text-color: #080808;
+    --glass-bg: rgba(255, 255, 255, 0.4);
+    --glass-border: rgba(0, 0, 0, 0.05);
+    --grid-color: rgba(0, 0, 0, 0.03);
+    --ruler-color: rgba(0, 0, 0, 0.2);
+    --card-bg: #ffffff;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.5s ease, color 0.5s ease;
+    overflow-x: hidden;
+    cursor: none;
+    /* Custom cursor implementation later if needed, sticking to default for usability/cleanliness per prompt */
+}
+
+/* Glassmorphism utility */
+.glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+}
+
+/* Technical Grid Background */
+.bg-grid {
+    background-size: 40px 40px;
+    background-image: linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
+}
+
+/* No rounding enforcement */
+* {
+    border-radius: 0 !important;
+}
+
+/* Typography utilities */
+.char {
+    display: inline-block;
+}
+
+/* Preloader */
+#preloader {
+    z-index: 9999;
+    pointer-events: all;
+}
+
+/* Scrollbar Hide */
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+}
+
+/* Tape Measure Styles */
+.tape-tick {
+    width: 100%;
+    height: 1px;
+    background: var(--ruler-color);
+    margin-bottom: 20px;
+    transform-origin: left;
+    transition: background 0.3s;
+}
+
+.tape-tick.major {
+    width: 100%;
+    height: 2px;
+    background: var(--text-color);
+}
+
+/* Custom Cursor */
+#cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 12px;
+    height: 12px;
+    background-color: var(--text-color);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 10000;
+    /* transform handled by GSAP */
+    mix-blend-mode: difference;
+    transition: width 0.3s, height 0.3s, background-color 0.3s;
+}
+
+#cursor.hover {
+    width: 48px;
+    height: 48px;
+    background-color: transparent;
+    border: 1px solid var(--text-color);
+}
+
+/* Card Stack */
+.project-card {
+    transform-style: preserve-3d;
+    will-change: transform;
+}
+
+/* Stroke Text Utility */
+.stroke-text {
+    -webkit-text-stroke: 1px var(--text-color);
+    color: transparent;
+}
+
+.stroke-text span {
+    transition: color 0.1s, opacity 0.1s;
+}
