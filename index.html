@@ -10,7 +10,6 @@ hi what are you doing here
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>「✦」nozunesw</title>
     <link rel="icon" type="image/svg+xml" href="assets/nozune_softworks_white.svg">
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -18,11 +17,13 @@ hi what are you doing here
         rel="stylesheet">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
-    <!-- Lenis CSS -->
     <link rel="stylesheet" href="https://unpkg.com/lenis@1.1.20/dist/lenis.css">
-
-    <!-- Tailwind -->
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css" />
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -54,10 +55,7 @@ hi what are you doing here
 </head>
 
 <body class="bg-grid relative">
-    <!-- Custom Cursor -->
     <div id="cursor"></div>
-
-    <!-- Preloader -->
     <div id="preloader"
         class="fixed inset-0 bg-brand-black flex flex-col items-center justify-center transition-colors duration-500">
         <div class="relative w-64 h-16 border border-white/10 overflow-hidden">
@@ -120,14 +118,15 @@ hi what are you doing here
                 </div>
 
                 <div class="max-w-7xl mx-auto w-full z-10">
-                    <p class="font-mono text-xs mb-4 overflow-hidden"><span class="reveal-text block">EST. 09/25</span>
+                    <p class="font-mono text-xs mb-4 overflow-hidden"><span class="reveal-text block">EST.
+                            09/2025</span>
                     </p>
 
                     <h1
                         class="text-6xl md:text-8xl lg:text-9xl font-space leading-none tracking-tighter mb-8 mix-blend-overlay opacity-90">
-                        <div class="overflow-hidden"><span class="hero-line block">We do</span></div>
-                        <div class="overflow-hidden"><span class="hero-line block">code.</span></div>
-                        <div class="overflow-hidden"><span class="hero-line block text-stroke">Elegantly.</span></div>
+                        <div class="overflow-hidden"><span class="hero-line block">We speak</span></div>
+                        <div class="overflow-hidden"><span class="hero-line block">code,</span></div>
+                        <div class="overflow-hidden"><span class="hero-line block text-stroke">elegantly.</span></div>
                     </h1>
 
                     <div
@@ -139,46 +138,48 @@ hi what are you doing here
                             </p>
                         </div>
                         <div class="mt-8 md:mt-0 font-mono text-xs text-right opacity-60 reveal-p">
-                            SCROLL TO INITIALIZE<br>
-                            ↓
+                            <span class="scroll-icon">
+                                <i class="ph-duotone ph-mouse-simple"></i>
+                            </span>
+                            scroll...
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- About Section (Horizontal Typewriter) -->
+            <!-- about -->
             <section id="about" class="h-screen w-full flex items-center overflow-hidden bg-current/5 relative">
                 <div id="about-container"
                     class="flex items-center pl-[10vw] pr-[10vw] whitespace-nowrap will-change-transform">
                     <h2 id="about-text"
-                        class="font-sans text-[15vh] md:text-[20vh] font-bold leading-none tracking-tighter text-transparent stroke-text">
+                        class="font-mono text-[15vh] md:text-[20vh] font-bold leading-none tracking-tighter text-transparent stroke-text">
                         We reject the generic. Software is an art form. Precision in every pixel. Motion with purpose.
-                        Function over fluff.
+                        UI with wit.
                     </h2>
                 </div>
 
-                <!-- Progress Bar -->
+                <!-- progress bar -->
                 <div class="absolute bottom-12 left-12 right-12 h-[1px] bg-current/10">
                     <div id="about-progress-bar" class="h-full bg-current w-0"></div>
                 </div>
             </section>
 
-            <!-- Projects Section (Stacked Cards) -->
+            <!-- projects -->
             <section id="projects" class="relative py-24 px-4 md:px-12 bg-current/5 min-h-[150vh]">
                 <div class="max-w-7xl mx-auto h-full flex flex-col">
                     <div class="mb-12 flex items-end justify-between pb-4 relative">
-                        <h2 class="text-4xl md:text-6xl font-bold tracking-tighter">SELECTED WORKS</h2>
+                        <h2 class="text-4xl md:text-6xl font-bold tracking-tighter">featured projects</h2>
                         <span class="font-mono text-sm opacity-60">01 — 03</span>
-                        <!-- Progress Bar -->
+                        <!-- progress bar -->
                         <div class="absolute bottom-0 left-0 w-full h-[1px] bg-current/20">
                             <div id="projects-progress" class="h-full bg-current w-0"></div>
                         </div>
                     </div>
 
-                    <!-- Stacking Context -->
+                    <!-- cards wrapper -->
                     <div id="cards-wrapper" class="relative w-full h-[600px] grid place-items-center perspective-1000">
 
-                        <!-- Card 1 -->
+                        <!-- card 1 -->
                         <div class="card-wrapper col-start-1 row-start-1 w-full max-w-3xl h-[450px] md:h-[500px]">
                             <div
                                 class="project-card w-full h-full glass p-8 md:p-12 flex flex-col justify-between border-t-4 border-current hover:border-brand-accent transition-colors duration-300">
@@ -203,7 +204,7 @@ hi what are you doing here
                             </div>
                         </div>
 
-                        <!-- Card 2 -->
+                        <!-- card 2 -->
                         <div class="card-wrapper col-start-1 row-start-1 w-full max-w-3xl h-[450px] md:h-[500px]">
                             <div class="project-card w-full h-full glass p-8 md:p-12 flex flex-col justify-between border-t-4 border-current hover:border-brand-accent transition-colors duration-300"
                                 style="background-color: var(--card-bg)">
@@ -228,7 +229,7 @@ hi what are you doing here
                             </div>
                         </div>
 
-                        <!-- Card 3 -->
+                        <!-- card 3 -->
                         <div class="card-wrapper col-start-1 row-start-1 w-full max-w-3xl h-[450px] md:h-[500px]">
                             <div class="project-card w-full h-full glass p-8 md:p-12 flex flex-col justify-between border-t-4 border-current hover:border-brand-accent transition-colors duration-300"
                                 style="background-color: var(--card-bg)">
@@ -257,7 +258,7 @@ hi what are you doing here
                 </div>
             </section>
 
-            <!-- Footer -->
+            <!-- footer -->
             <footer class="py-12 px-6 md:px-12 border-t border-current/10">
                 <div class="flex flex-col md:flex-row justify-between items-end">
                     <div>
@@ -281,11 +282,11 @@ hi what are you doing here
         </div>
     </div>
 
-    <!-- Fluid Canvas -->
+    <!-- fluid canvas -->
     <canvas id="fluid-canvas"
         class="fixed top-0 left-0 w-full h-full pointer-events-none z-[100] mix-blend-screen blur-[50px] opacity-80"></canvas>
 
-    <!-- Scripts -->
+    <!-- scripts -->
     <script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
