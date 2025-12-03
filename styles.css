@@ -35,7 +35,14 @@ body {
     transition: background-color 0.5s ease, color 0.5s ease;
     overflow-x: hidden;
     cursor: none;
-    /* Custom cursor implementation later if needed, sticking to default for usability/cleanliness per prompt */
+}
+
+a,
+button,
+input,
+select,
+textarea {
+    cursor: none !important;
 }
 
 /* Glassmorphism utility */
