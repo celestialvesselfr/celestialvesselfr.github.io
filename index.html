@@ -1,477 +1,298 @@
+<!--
+hi what are you doing here
+-->
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="antialiased">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>「✦」 Thalassa.</title>
-    <link rel="icon" type="image/png" href="favicon.png">
-    <link rel="stylesheet" href="styles.css">
+    <title>「✦」nozunesw</title>
+    <link rel="icon" type="image/svg+xml" href="assets/nozune_softworks_white.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100..400&family=Manrope:wght@200;400;500;800&display=swap"
         rel="stylesheet">
-
-    <!-- tailwind -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/lenis@1.1.20/dist/lenis.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css" />
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <!--gsap -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://unpkg.com/lenis@1.0.45/dist/lenis.min.js"></script>
-    <!-- phosphor -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-
-    <!-- tailwind cfg -->
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
+                fontFamily: {
+                    sans: ['Manrope', 'sans-serif'],
+                    mono: ['JetBrains Mono', 'monospace'],
+                    space: ['Space Grotesk', 'sans-serif'],
+                },
                 extend: {
                     colors: {
-                        'soft-blue': '#E0F2F1',
-                        'ocean-mist': '#B2DFDB',
-                        'sand': '#FDF5E6',
-                        'coral-pale': '#FFCCBC',
-                        'slate-dark': '#37474F',
-                        'teal-muted': '#4DB6AC',
-                        'foam': '#F5F5F5',
-                        // Dark mode specific overrides if needed
-                        'dark-bg': '#0f172a',
-                        'dark-card': '#1e293b',
+                        brand: {
+                            black: '#080808',
+                            dark: '#121212',
+                            light: '#f4f4f4',
+                            white: '#ffffff',
+                            accent: '#3b82f6' // subtle blue, rarely used
+                        }
                     },
-                    fontFamily: {
-                        sans: ['Outfit', 'sans-serif'],
-                        serif: ['Playfair Display', 'serif'],
+                    spacing: {
+                        '128': '32rem',
                     }
                 }
             }
         }
     </script>
+
+    <link rel="stylesheet" href="styles.css">
 </head>
 
-<body
-    class="bg-sand dark:bg-dark-bg text-slate-dark dark:text-soft-blue antialiased selection:bg-coral-pale selection:text-slate-dark">
+<body class="bg-grid relative">
+    <div id="cursor"></div>
+    <div id="preloader"
+        class="fixed inset-0 bg-brand-black flex flex-col items-center justify-center transition-colors duration-500">
+        <div class="relative w-64 h-16 border border-white/10 overflow-hidden">
+            <div id="loader-bar" class="absolute top-0 left-0 h-full bg-white w-0"></div>
+            <div class="absolute inset-0 flex items-center justify-between px-4 mix-blend-difference">
+                <span class="font-mono text-xs uppercase tracking-widest text-white">...</span>
+                <span id="loader-text" class="font-mono text-xs text-white">0%</span>
+            </div>
+        </div>
+    </div>
 
     <!-- Navigation -->
-    <!-- Initial state is full width, GSAP will handle the "Dynamic Island" transformation -->
-    <div class="fixed top-0 left-0 w-full z-50 flex justify-center pointer-events-none" id="nav-container">
-        <nav class="w-full glass-nav pointer-events-auto py-4 px-6 transition-colors duration-300" id="navbar">
-            <div class="max-w-7xl mx-auto flex justify-between items-center h-full">
-                <!-- Logo -->
-                <div class="text-2xl font-serif font-bold tracking-tighter text-teal-muted pr-12">
-                    Thalassa. <span class="text-slate-dark dark:text-white">✦</span>
-                </div>
-
-                <!-- Desktop Menu -->
-                <div
-                    class="hidden md:flex items-center space-x-8 text-sm font-semibold tracking-wide uppercase opacity-90 dark:text-gray-200">
-                    <a href="#about" class="hover:text-teal-muted transition-colors">About</a>
-                    <a href="#gear" class="hover:text-teal-muted transition-colors">Gear</a>
-                    <a href="#benefits" class="hover:text-teal-muted transition-colors">Benefits</a>
-                    <a href="#safety" class="hover:text-teal-muted transition-colors">Safety</a>
-                    <a href="#planning" class="hover:text-teal-muted transition-colors">Planning</a>
-
-                    <!-- Dark Mode Toggle -->
-                    <button id="theme-toggle"
-                        class="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors focus:outline-none">
-                        <i class="ph-duotone ph-moon-stars text-xl block dark:hidden"></i>
-                        <i class="ph-duotone ph-sun-horizon text-xl hidden dark:block text-yellow-300"></i>
-                    </button>
-                </div>
-
-                <!-- Mobile Menu Button -->
-                <div class="flex items-center gap-4 md:hidden">
-                    <button id="theme-toggle-mobile" class="p-2">
-                        <i class="ph-duotone ph-moon-stars text-xl block dark:hidden"></i>
-                        <i class="ph-duotone ph-sun-horizon text-xl hidden dark:block text-yellow-300"></i>
-                    </button>
-                    <button>
-                        <i class="ph-duotone ph-list text-2xl dark:text-white"></i>
-                    </button>
-                </div>
+    <nav class="fixed top-0 left-0 w-full z-50 glass px-6 py-4 flex justify-between items-center transition-all duration-300"
+        id="navbar">
+        <!-- Logo -->
+        <a href="#" class="group flex items-center gap-3">
+            <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"
+                class="w-10 h-10">
+                <rect x="30" y="30" width="40" height="40" stroke="currentColor" stroke-width="2"
+                    class="text-current origin-center rotate-[35deg] transition-colors duration-500" />
+                <path d="M50 20 L55 45 L80 50 L55 55 L50 80 L45 55 L20 50 L45 45 Z" fill="currentColor"
+                    class="text-current origin-center rotate-[20deg] transition-transform duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:rotate-[200deg]" />
+            </svg>
+            <div id="logo-text" class="flex items-baseline leading-none select-none relative">
+                <span class="font-sans font-normal text-xl tracking-tight">nozune</span>
+                <span class="font-sans font-thin text-xl tracking-tight opacity-70 flex">
+                    s<span class="logo-collapse overflow-hidden inline-block">oft</span>w<span
+                        class="logo-collapse overflow-hidden inline-block">orks</span>
+                </span>
             </div>
-        </nav>
+        </a>
+
+        <!-- Logo Tooltip -->
+        <div id="logo-tooltip"
+            class="fixed pointer-events-none z-[110] opacity-0 flex items-center gap-2 px-3 py-1.5 bg-[var(--text-color)] text-[var(--bg-color)] rounded-sm transform -translate-x-1/2 -translate-y-1/2 border border-[var(--bg-color)]">
+            <div class="w-1.5 h-1.5 bg-[var(--bg-color)]"></div>
+            <span class="font-mono text-[10px] uppercase tracking-wide font-bold">Return Home</span>
+        </div>
+        </a>
+
+        <!-- Theme Toggle -->
+        <button id="theme-toggle"
+            class="flex items-center gap-2 font-mono text-xs border border-transparent hover:border-current px-3 py-1 transition-all">
+            <span id="theme-text">LIGHT MODE</span>
+            <div class="w-2 h-2 bg-current"></div>
+        </button>
+    </nav>
+
+    <!-- Lenis Wrapper -->
+    <div id="smooth-wrapper">
+        <div id="smooth-content">
+
+            <!-- Hero Section -->
+            <section class="min-h-screen flex flex-col justify-center px-6 pt-24 relative overflow-hidden">
+                <div
+                    class="absolute top-1/4 right-10 w-64 h-64 border border-current opacity-5 rotate-12 decorative-shape">
+                </div>
+                <div class="absolute bottom-20 left-20 w-32 h-32 border border-cur
+                    rent opacity-5 -rotate-12 decorative-shape">
+                </div>
+
+                <div class="max-w-7xl mx-auto w-full z-10">
+                    <p class="font-mono text-xs mb-4 overflow-hidden"><span class="reveal-text block">EST.
+                            09/2025</span>
+                    </p>
+
+                    <h1
+                        class="text-6xl md:text-8xl lg:text-9xl font-space leading-none tracking-tighter mb-8 mix-blend-overlay opacity-90">
+                        <div class="overflow-hidden"><span class="hero-line block">We speak</span></div>
+                        <div class="overflow-hidden"><span class="hero-line block">code,</span></div>
+                        <div class="overflow-hidden"><span class="hero-line block text-stroke">elegantly.</span></div>
+                    </h1>
+
+                    <div
+                        class="flex flex-col md:flex-row justify-between items-end mt-12 border-t border-current/20 pt-6">
+                        <div class="max-w-md">
+                            <p class="font-sans text-lg md:text-xl font-light opacity-80 reveal-p">
+                                We craft minimalist software solutions with a focus on motion, utility, and aesthetic
+                                precision.
+                            </p>
+                        </div>
+                        <div class="mt-8 md:mt-0 font-mono text-xs text-right opacity-60 reveal-p">
+                            <span class="scroll-icon">
+                                <i class="ph-duotone ph-mouse-simple"></i>
+                            </span>
+                            scroll...
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- about -->
+            <section id="about" class="h-screen w-full flex items-center overflow-hidden bg-current/5 relative">
+                <div id="about-container"
+                    class="flex items-center pl-[10vw] pr-[10vw] whitespace-nowrap will-change-transform">
+                    <h2 id="about-text"
+                        class="font-mono text-[15vh] md:text-[20vh] font-bold leading-none tracking-tighter text-transparent stroke-text">
+                        We reject the generic. Software is an art form. Precision in every pixel. Motion with purpose.
+                        UI with wit.
+                    </h2>
+                </div>
+
+                <!-- progress bar -->
+                <div class="absolute bottom-12 left-12 right-12 h-[1px] bg-current/10">
+                    <div id="about-progress-bar" class="h-full bg-current w-0"></div>
+                </div>
+            </section>
+
+            <!-- projects -->
+            <section id="projects" class="relative py-24 px-4 md:px-12 bg-current/5 min-h-[150vh]">
+                <div class="max-w-7xl mx-auto h-full flex flex-col">
+                    <div class="mb-12 flex items-end justify-between pb-4 relative">
+                        <h2 class="text-4xl md:text-6xl font-bold tracking-tighter">featured projects</h2>
+                        <span class="font-mono text-sm opacity-60">01 — 03</span>
+                        <!-- progress bar -->
+                        <div class="absolute bottom-0 left-0 w-full h-[1px] bg-current/20">
+                            <div id="projects-progress" class="h-full bg-current w-0"></div>
+                        </div>
+                    </div>
+
+                    <!-- cards wrapper -->
+                    <div id="cards-wrapper" class="relative w-full h-[600px] grid place-items-center perspective-1000">
+
+                        <!-- card 1 -->
+                        <div class="card-wrapper col-start-1 row-start-1 w-full max-w-3xl h-[450px] md:h-[500px]">
+                            <div
+                                class="project-card w-full h-full glass p-8 md:p-12 flex flex-col justify-between border-t-4 border-current hover:border-brand-accent transition-colors duration-300">
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center gap-4">
+                                        <h3 class="text-3xl md:text-4xl font-bold uppercase">placeholder</h3>
+                                        <div class="card-stats font-mono text-[10px] opacity-40">INIT_COORDS</div>
+                                    </div>
+                                    <svg class="w-8 h-8 opacity-50" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5"
+                                            d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="font-mono text-xs mb-4 opacity-60">??? / ??? / ???</p>
+                                    <p class="font-sans text-lg opacity-80">A placeholder.</p>
+                                </div>
+                                <div
+                                    class="absolute -right-4 -bottom-4 font-mono text-9xl opacity-5 select-none pointer-events-none">
+                                    01</div>
+                            </div>
+                        </div>
+
+                        <!-- card 2 -->
+                        <div class="card-wrapper col-start-1 row-start-1 w-full max-w-3xl h-[450px] md:h-[500px]">
+                            <div class="project-card w-full h-full glass p-8 md:p-12 flex flex-col justify-between border-t-4 border-current hover:border-brand-accent transition-colors duration-300"
+                                style="background-color: var(--card-bg)">
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center gap-4">
+                                        <h3 class="text-3xl md:text-4xl font-bold uppercase">placeholder</h3>
+                                        <div class="card-stats font-mono text-[10px] opacity-40">INIT_COORDS</div>
+                                    </div>
+                                    <svg class="w-8 h-8 opacity-50" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5"
+                                            d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="font-mono text-xs mb-4 opacity-60">?? / ?? / ??</p>
+                                    <p class="font-sans text-lg opacity-80">A placeholder.</p>
+                                </div>
+                                <div
+                                    class="absolute -right-4 -bottom-4 font-mono text-9xl opacity-5 select-none pointer-events-none">
+                                    02</div>
+                            </div>
+                        </div>
+
+                        <!-- card 3 -->
+                        <div class="card-wrapper col-start-1 row-start-1 w-full max-w-3xl h-[450px] md:h-[500px]">
+                            <div class="project-card w-full h-full glass p-8 md:p-12 flex flex-col justify-between border-t-4 border-current hover:border-brand-accent transition-colors duration-300"
+                                style="background-color: var(--card-bg)">
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center gap-4">
+                                        <h3 class="text-3xl md:text-4xl font-bold uppercase">placeholder</h3>
+                                        <div class="card-stats font-mono text-[10px] opacity-40">INIT_COORDS</div>
+                                    </div>
+                                    <svg class="w-8 h-8 opacity-50" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5"
+                                            d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="font-mono text-xs mb-4 opacity-60">??? / ??? / ???</p>
+                                    <p class="font-sans text-lg opacity-80">A placeholder.</p>
+                                </div>
+                                <div
+                                    class="absolute -right-4 -bottom-4 font-mono text-9xl opacity-5 select-none pointer-events-none">
+                                    03</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- footer -->
+            <footer class="py-12 px-6 md:px-12 border-t border-current/10">
+                <div class="flex flex-col md:flex-row justify-between items-end">
+                    <div>
+                        <h4 class="text-2xl font-bold tracking-tight mb-2">nozune<span
+                                class="font-thin">softworks</span></h4>
+                        <p class="font-mono text-xs opacity-60">proudly australian.</p>
+                    </div>
+                    <div class="mt-8 md:mt-0 flex gap-6">
+                        <a href="https://github.com/celestialvesselfr" target="_blank" rel="noopener noreferrer"
+                            class="font-mono text-xs hover:underline decoration-1 underline-offset-4">GITHUB</a>
+                        <a href="https://gitlab.com/yknozune" target="_blank" rel="noopener noreferrer"
+                            class="font-mono text-xs hover:underline decoration-1 underline-offset-4">GITLAB</a>
+                        <a href="https://discord.com/users/921977010845286420" target="_blank" rel="noopener noreferrer"
+                            class="font-mono text-xs hover:underline decoration-1 underline-offset-4">DISCORD</a>
+                    </div>
+                </div>
+                <div class="mt-12 flex justify-between items-center text-[10px] font-mono opacity-40">
+                    <span>&copy; 2025 nozune softworks. all rights reserved.</span>
+                </div>
+            </footer>
+        </div>
     </div>
 
-    <!-- Hero Section -->
-    <section id="hero"
-        class="relative h-screen flex items-center justify-center overflow-hidden bg-soft-blue dark:bg-slate-800 transition-colors duration-500">
-        <!-- Abstract Background Shapes -->
-        <div class="absolute top-0 left-0 w-full h-full overflow-hidden z-0 pointer-events-none">
-            <div
-                class="absolute top-[-10%] right-[-10%] w-[50vw] h-[50vw] bg-ocean-mist dark:bg-teal-900 rounded-full opacity-40 blur-3xl gs-shape mix-blend-multiply dark:mix-blend-overlay">
-            </div>
-            <div
-                class="absolute bottom-[-10%] left-[-10%] w-[40vw] h-[40vw] bg-coral-pale dark:bg-indigo-900 rounded-full opacity-30 blur-3xl gs-shape-2 mix-blend-multiply dark:mix-blend-overlay">
-            </div>
-        </div>
+    <!-- fluid canvas -->
+    <canvas id="fluid-canvas"
+        class="fixed top-0 left-0 w-full h-full pointer-events-none z-[100] mix-blend-screen blur-[50px] opacity-80"></canvas>
 
-        <div class="relative z-10 text-center px-6 max-w-4xl">
-            <p class="gs-reveal text-teal-muted uppercase tracking-[0.3em] text-sm font-bold mb-4">Outdoor Adventure</p>
-            <h1
-                class="gs-reveal font-serif text-6xl md:text-8xl lg:text-9xl mb-6 leading-tight text-slate-dark dark:text-white">
-                Ride the <br><span class="italic text-teal-muted">Elements</span>
-            </h1>
-            <p
-                class="gs-reveal text-lg md:text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto mb-10 font-light">
-                Harnessing the power of the wind to glide across the water.
-            </p>
-            <div class="gs-reveal">
-                <a href="#about"
-                    class="inline-block px-8 py-4 border border-slate-dark dark:border-white rounded-full hover:bg-slate-dark hover:text-white dark:text-white dark:hover:bg-white dark:hover:text-slate-900 transition-all duration-300 uppercase text-xs tracking-widest">
-                    Explore the Sport
-                </a>
-            </div>
-        </div>
-    </section>
+    <!-- scripts -->
+    <script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Draggable.min.js"></script>
 
-    <!-- Wave Divider -->
-    <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-none rotate-180 pointer-events-none z-20">
-        <svg class="relative block w-[calc(100%+1.3px)] h-[150px] md:h-[200px]" data-name="Layer 1"
-            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-            <path
-                d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z"
-                opacity=".25" class="fill-sand dark:fill-dark-bg transition-colors duration-500"></path>
-            <path
-                d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z"
-                opacity=".5" class="fill-sand dark:fill-dark-bg transition-colors duration-500"></path>
-            <path
-                d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z"
-                class="fill-sand dark:fill-dark-bg transition-colors duration-500"></path>
-        </svg>
-    </div>
-
-    <!-- Intro & History (Lesson 1 & 2) -->
-    <section id="about"
-        class="py-24 md:py-32 px-6 bg-sand dark:bg-dark-bg transition-colors duration-500 relative z-10">
-        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-            <div class="gs-fade-right">
-                <span class="text-coral-pale font-bold uppercase tracking-widest text-xs mb-2 block">The Origins</span>
-                <h2 class="font-serif text-4xl md:text-5xl mb-8 dark:text-white">Where Sailing Meets Surfing</h2>
-                <div class="space-y-6 text-slate-600 dark:text-slate-400 leading-relaxed">
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                        laboris nisi ut aliquip ex ea commodo consequat.
-                    </p>
-                    <p>
-                        <strong>History:</strong> Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-                        dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
-                        qui officia deserunt mollit anim id est laborum.
-                    </p>
-                    <p>
-                        <strong>Technique:</strong> Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit
-                        aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
-                    </p>
-                </div>
-            </div>
-            <div
-                class="relative h-[500px] w-full bg-slate-200 dark:bg-slate-800 rounded-2xl overflow-hidden gs-image-reveal shadow-2xl">
-                <!--placeholder svg -->
-                <img src="assets/windsurfer.jpg" class="w-full h-full object-cover" alt="Windsurfer" />
-                <div
-                    class="absolute bottom-6 left-6 bg-white/90 dark:bg-slate-900/90 backdrop-blur px-6 py-4 rounded-lg">
-                    <p class="font-serif italic text-slate-dark dark:text-white">"The purest form of sailing."</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- equipment -->
-    <section id="gear" class="py-24 bg-white dark:bg-slate-900 transition-colors duration-500">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-16 gs-fade-up">
-                <span class="text-teal-muted font-bold uppercase tracking-widest text-xs">Essentials</span>
-                <h2 class="font-serif text-4xl md:text-5xl mt-2 dark:text-white">The Gear Guide</h2>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- 1 -->
-                <div
-                    class="gs-card group relative bg-soft-blue dark:bg-dark-card rounded-2xl hover:bg-ocean-mist dark:hover:bg-slate-700 transition-all duration-500 cursor-pointer overflow-hidden border border-transparent dark:border-slate-700">
-                    <div class="relative z-10">
-                        <img src="https://placehold.co/600x400/E0F2F1/37474F?text=Windsurf+Board"
-                            alt="Windsurfing Board" class="w-full h-48 object-cover shadow-sm">
-                        <div class="p-6">
-                            <i class="ph-duotone ph-anchor text-3xl text-slate-dark dark:text-teal-400 mb-3 block"></i>
-                            <h3 class="font-serif text-xl font-bold mb-3 dark:text-white">The Board</h3>
-                            <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                                Ranges from 2 to 3 meters. High volume boards offer stability for beginners, while
-                                smaller
-                                boards offer speed for pros.
-                            </p>
-                        </div>
-                    </div>
-                    <div
-                        class="absolute -bottom-10 -right-10 w-32 h-32 bg-white dark:bg-teal-500 rounded-full opacity-20 group-hover:scale-150 transition-transform duration-700">
-                    </div>
-                </div>
-
-                <!-- 2 -->
-                <div
-                    class="gs-card group relative bg-sand dark:bg-dark-card rounded-2xl hover:bg-coral-pale dark:hover:bg-slate-700 transition-colors duration-500 cursor-pointer overflow-hidden border border-transparent dark:border-slate-700">
-                    <div class="relative z-10">
-                        <img src="https://placehold.co/600x400/FDF5E6/37474F?text=The+Rig" alt="Windsurfing Rig"
-                            class="w-full h-48 object-cover shadow-sm">
-                        <div class="p-6">
-                            <i class="ph-duotone ph-wind text-3xl text-slate-dark dark:text-teal-400 mb-3 block"></i>
-                            <h3 class="font-serif text-xl font-bold mb-3 dark:text-white">The Rig</h3>
-                            <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                                Comprises the sail, mast, and boom. The sail catches the wind, and the boom is what the
-                                rider holds onto.
-                            </p>
-                        </div>
-                    </div>
-                    <div
-                        class="absolute -bottom-10 -right-10 w-32 h-32 bg-white dark:bg-orange-500 rounded-full opacity-20 group-hover:scale-150 transition-transform duration-700">
-                    </div>
-                </div>
-
-                <!-- 3 -->
-                <div
-                    class="gs-card group relative bg-soft-blue dark:bg-dark-card rounded-2xl hover:bg-ocean-mist dark:hover:bg-slate-700 transition-colors duration-500 cursor-pointer overflow-hidden border border-transparent dark:border-slate-700">
-                    <div class="relative z-10">
-                        <img src="https://placehold.co/600x400/E0F2F1/37474F?text=Wetsuit" alt="Wetsuit"
-                            class="w-full h-48 object-cover shadow-sm">
-                        <div class="p-6">
-                            <i class="ph-duotone ph-shield text-3xl text-slate-dark dark:text-teal-400 mb-3 block"></i>
-                            <h3 class="font-serif text-xl font-bold mb-3 dark:text-white">Wetsuit</h3>
-                            <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                                Essential for thermal protection against cold water and wind chill. Thickness varies by
-                                climate (e.g., 3/2mm).
-                            </p>
-                        </div>
-                    </div>
-                    <div
-                        class="absolute -bottom-10 -right-10 w-32 h-32 bg-white dark:bg-teal-500 rounded-full opacity-20 group-hover:scale-150 transition-transform duration-700">
-                    </div>
-                </div>
-
-                <!-- 4 -->
-                <div
-                    class="gs-card group relative bg-sand dark:bg-dark-card rounded-2xl hover:bg-coral-pale dark:hover:bg-slate-700 transition-colors duration-500 cursor-pointer overflow-hidden border border-transparent dark:border-slate-700">
-                    <div class="relative z-10">
-                        <img src="https://placehold.co/600x400/FDF5E6/37474F?text=Safety+Gear" alt="Safety Gear (PFD)"
-                            class="w-full h-48 object-cover shadow-sm">
-                        <div class="p-6">
-                            <i
-                                class="ph-duotone ph-lifebuoy text-3xl text-slate-dark dark:text-teal-400 mb-3 block"></i>
-                            <h3 class="font-serif text-xl font-bold mb-3 dark:text-white">Safety Gear</h3>
-                            <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                                A Personal Flotation Device (PFD) is crucial. A harness helps transfer wind power to the
-                                body, reducing arm fatigue.
-                            </p>
-                        </div>
-                    </div>
-                    <div
-                        class="absolute -bottom-10 -right-10 w-32 h-32 bg-white dark:bg-orange-500 rounded-full opacity-20 group-hover:scale-150 transition-transform duration-700">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- benefits -->
-    <section id="benefits"
-        class="py-24 bg-slate-dark dark:bg-black text-soft-blue relative overflow-hidden transition-colors duration-500">
-        <div class="max-w-7xl mx-auto px-6 relative z-10">
-            <div class="grid md:grid-cols-2 gap-16">
-                <div class="gs-fade-right self-center">
-                    <h2 class="font-serif text-4xl md:text-6xl mb-6 text-white">Why We Surf</h2>
-                    <p class="text-gray-400 text-lg mb-8 font-light">
-                        Windsurfing isn't just a sport; it's a holistic experience that challenges the body and heals
-                        the mind.
-                    </p>
-                    <div class="space-y-6">
-                        <div class="flex items-start gs-list-item">
-                            <div class="bg-teal-muted p-2 rounded-lg mr-4 text-white">
-                                <!-- no duotone because this icon does not have a duotone version-->
-                                <i class="ph ph-activity text-2xl"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-white">Physical Health</h4>
-                                <p class="text-sm text-gray-400">Builds immense core strength, balance, and
-                                    cardiovascular endurance.</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start gs-list-item">
-                            <div class="bg-coral-pale p-2 rounded-lg mr-4 text-slate-dark">
-                                <i class="ph-duotone ph-smiley text-2xl"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-white">Emotional Well-being</h4>
-                                <p class="text-sm text-gray-400">The "Blue Mind" effect reduces stress and increases
-                                    confidence.</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start gs-list-item">
-                            <div class="bg-ocean-mist p-2 rounded-lg mr-4 text-slate-dark">
-                                <i class="ph-duotone ph-brain text-2xl"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-white">Cognitive Focus</h4>
-                                <p class="text-sm text-gray-400">Requires intense problem-solving skills to read wind
-                                    and waves constantly.</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start gs-list-item">
-                            <div class="bg-white p-2 rounded-lg mr-4 text-slate-dark">
-                                <i class="ph-duotone ph-users text-2xl"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-white">Social Connection</h4>
-                                <p class="text-sm text-gray-400">A community bonded by a love for the ocean and
-                                    adventure.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="relative h-[600px] border border-white/10 rounded-full overflow-hidden gs-fade-left">
-                    <!-- Abstract Art representing balance -->
-                    <svg class="w-full h-full" viewBox="0 0 400 600" preserveAspectRatio="xMidYMid slice">
-                        <defs>
-                            <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" style="stop-color:#37474F;stop-opacity:1" />
-                                <stop offset="100%" style="stop-color:#4DB6AC;stop-opacity:1" />
-                            </linearGradient>
-                        </defs>
-                        <rect width="100%" height="100%" fill="url(#grad1)" />
-                        <circle cx="200" cy="300" r="150" stroke="rgba(255,255,255,0.2)" stroke-width="2" fill="none" />
-                        <circle cx="200" cy="300" r="100" stroke="rgba(255,255,255,0.4)" stroke-width="1" fill="none" />
-                        <line x1="200" y1="50" x2="200" y2="550" stroke="rgba(255,204,188,0.5)" stroke-width="2" />
-                        <path d="M50 300 Q 200 200 350 300" stroke="rgba(255,255,255,0.3)" fill="none"
-                            stroke-width="2" />
-                    </svg>
-                    <div class="absolute inset-0 flex items-center justify-center">
-                        <h3 class="font-serif text-3xl italic text-white/90">Find Balance</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Safety & Risk (Lesson 3) -->
-    <section id="safety" class="py-24 bg-coral-pale/20 dark:bg-slate-900 transition-colors duration-500">
-        <div class="max-w-4xl mx-auto px-6 text-center">
-            <h2 class="font-serif text-4xl mb-12 gs-fade-up dark:text-white">Risk Assessment</h2>
-
-            <div class="grid md:grid-cols-3 gap-6">
-                <div
-                    class="bg-white dark:bg-dark-card p-6 rounded-xl shadow-sm gs-zoom-in border-t-4 border-yellow-400 transition-colors duration-300">
-                    <div class="font-bold text-xl mb-2 dark:text-white">Weather</div>
-                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">Sudden wind changes or storms.</p>
-                    <div class="text-xs font-bold uppercase text-slate-400">Mitigation</div>
-                    <p class="text-sm dark:text-gray-300">Check forecasts; do not sail in offshore winds.</p>
-                </div>
-
-                <div
-                    class="bg-white dark:bg-dark-card p-6 rounded-xl shadow-sm gs-zoom-in border-t-4 border-red-400 transition-colors duration-300">
-                    <div class="font-bold text-xl mb-2 dark:text-white">Hypothermia</div>
-                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">Prolonged exposure to cold water.</p>
-                    <div class="text-xs font-bold uppercase text-slate-400">Mitigation</div>
-                    <p class="text-sm dark:text-gray-300">Wear appropriate wetsuit; know limits.</p>
-                </div>
-
-                <div
-                    class="bg-white dark:bg-dark-card p-6 rounded-xl shadow-sm gs-zoom-in border-t-4 border-orange-400 transition-colors duration-300">
-                    <div class="font-bold text-xl mb-2 dark:text-white">Equipment</div>
-                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">Broken mast or torn sail offshore.</p>
-                    <div class="text-xs font-bold uppercase text-slate-400">Mitigation</div>
-                    <p class="text-sm dark:text-gray-300">Check gear before launch; carry a safety line.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Planning & Location (Lesson 4) -->
-    <section id="planning" class="py-24 bg-soft-blue dark:bg-slate-800 transition-colors duration-500">
-        <div class="max-w-6xl mx-auto px-6">
-            <div
-                class="flex flex-col md:flex-row gap-12 bg-white dark:bg-dark-card rounded-3xl overflow-hidden shadow-xl gs-fade-up transition-colors duration-300">
-                <!-- Mock Map visual -->
-                <div class="md:w-1/2 bg-slate-200 dark:bg-slate-900 relative min-h-[400px]">
-                    <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4899.280910183431!2d-156.44347922118277!3d20.900764209145457!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7954d2b245307951%3A0x4ac6400e9de876b4!2sKanaha%20Beach%20Park!5e0!3m2!1sen!2sau!4v1764628978801!5m2!1sen!2sau"
-                        width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade"></iframe>
-                    width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade"></iframe>
-                </div>
-
-                <div class="md:w-1/2 p-10 md:p-16 flex flex-col justify-center">
-                    <span class="text-teal-muted font-bold uppercase text-xs mb-4">Project Location</span>
-                    <h2 class="font-serif text-4xl mb-6 dark:text-white">Kanaha Beach Park</h2>
-                    <p class="text-slate-600 dark:text-gray-300 mb-6">
-                        Located on the North Shore of Maui, this is the world's premier windsurfing destination.
-                    </p>
-
-                    <ul class="space-y-4 mb-8">
-                        <li class="flex items-center text-sm dark:text-gray-300">
-                            <i class="ph-duotone ph-currency-dollar text-lg mr-3 text-coral-pale"></i>
-                            <span>Cost: $60-80/day (Rental & Insurance, prices depend based on shop.)</span>
-                        </li>
-                        <li class="flex items-center text-sm dark:text-gray-300">
-                            <i class="ph-duotone ph-check-circle text-lg mr-3 text-coral-pale"></i>
-                            <span>Includes: Board, Rig, PFD</span>
-                        </li>
-                        <li class="flex items-center text-sm dark:text-gray-300">
-                            <i class="ph-duotone ph-warning text-lg mr-3 text-coral-pale"></i>
-                            <span>Lifeguard on duty 8am-4:45pm</span>
-                        </li>
-                    </ul>
-
-                    <button
-                        class="bg-slate-dark dark:bg-teal-600 text-white px-8 py-3 rounded-full hover:bg-teal-muted dark:hover:bg-teal-700 transition-colors w-max text-sm uppercase tracking-wider">
-                        View Logistics Plan
-                    </button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- story -->
-    <section class="py-32 bg-sand dark:bg-dark-bg text-center px-6 transition-colors duration-500">
-        <div class="max-w-3xl mx-auto gs-scale-up">
-            <i class="ph-duotone ph-quotes text-6xl mx-auto text-coral-pale mb-8 opacity-50 block"></i>
-            <h3 class="font-serif text-2xl md:text-4xl italic leading-relaxed text-slate-700 dark:text-gray-200 mb-8">
-                "After my injury, the gym felt suffocating. Windsurfing gave me back my mobility, but more importantly,
-                it gave me back my freedom. The ocean doesn't judge; it just teaches."
-            </h3>
-            <div class="flex items-center justify-center gap-4">
-                <div class="w-12 h-12 bg-slate-300 rounded-full overflow-hidden">
-                    <!-- Avatar placeholder -->
-                    <svg viewBox="0 0 100 100" fill="#90A4AE">
-                        <rect width="100" height="100" />
-                        <circle cx="50" cy="40" r="20" fill="#ECEFF1" />
-                        <path d="M20 90 Q 50 60 80 90" fill="#ECEFF1" />
-                    </svg>
-                </div>
-                <div class="text-left">
-                    <div class="font-bold text-slate-dark dark:text-white">[insert name later]</div>
-                    <div class="text-xs text-slate-500 dark:text-gray-400 uppercase tracking-widest">Rehabilitation
-                        Story</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer
-        class="bg-slate-dark dark:bg-black text-white py-12 border-t border-white/10 transition-colors duration-500">
-        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
-            <div class="mb-6 md:mb-0">
-                <h4 class="font-serif text-2xl mb-2">✦ Thalassa.</h4>
-                <p class="text-gray-400 text-sm">by nozune softworks</p>
-            </div>
-            <div class="text-gray-400 text-sm">
-                &copy; nozune softworks 2025. all rights reserved.
-            </div>
-        </div>
-    </footer>
-
-    <!-- JS Logic -->
     <script src="script.js"></script>
 </body>
 
