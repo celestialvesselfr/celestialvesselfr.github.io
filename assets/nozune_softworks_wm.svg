@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 467 100" width="467" height="100" preserveAspectRatio="xMidYMid meet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;400&amp;display=swap');
+    </style>
+
+    <g transform="translate(0,0)">
+        <rect x="30" y="30" width="40" height="40" stroke="#ffffff" stroke-width="2" fill="none" transform="rotate(35 50 50)"></rect>
+        <path d="M 50 20 Q 50 50 80 50 Q 50 50 50 80 Q 50 50 20 50 Q 50 50 50 20 Z" 
+              fill="none" 
+              stroke="#ffffff" 
+              stroke-width="2" 
+              stroke-linejoin="round"
+              transform="rotate(20 50 50)">
+        </path>
+    </g>
+
+    
+    <g transform="translate(110, 60)">
+        <text font-family="Manrope, sans-serif" font-weight="400" font-size="40" fill="#ffffff" letter-spacing="-2">nozune</text>
+        <text x="135" font-family="Manrope, sans-serif" font-weight="100" font-size="40" fill="#ffffff" letter-spacing="-2" opacity="0.7">softworks</text>
+    </g>
+</svg>

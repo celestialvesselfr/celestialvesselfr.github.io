@@ -9,7 +9,7 @@ hi what are you doing here
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>「✦」nozunesw</title>
-    <link rel="icon" type="image/svg+xml" href="assets/nozune_softworks_white.svg">
+    <link rel="icon" type="image/svg+xml" href="assets/nozune_softworks.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -74,10 +74,14 @@ hi what are you doing here
         <a href="#" class="group flex items-center gap-3">
             <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"
                 class="w-10 h-10">
-                <rect x="30" y="30" width="40" height="40" stroke="currentColor" stroke-width="2"
-                    class="text-current origin-center rotate-[35deg] transition-colors duration-500" />
-                <path d="M50 20 L55 45 L80 50 L55 55 L50 80 L45 55 L20 50 L45 45 Z" fill="currentColor"
-                    class="text-current origin-center rotate-[20deg] transition-transform duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:rotate-[200deg]" />
+                <g transform="translate(0,0)">
+                    <rect x="30" y="30" width="40" height="40" stroke="currentColor" stroke-width="2" fill="none"
+                        transform="rotate(35 50 50)" class="text-current transition-colors duration-500"></rect>
+                    <path d="M 50 20 Q 50 50 80 50 Q 50 50 50 80 Q 50 50 20 50 Q 50 50 50 20 Z" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linejoin="round" transform="rotate(20 50 50)"
+                        class="text-current transition-colors duration-500">
+                    </path>
+                </g>
             </svg>
             <div id="logo-text" class="flex items-baseline leading-none select-none relative">
                 <span class="font-sans font-normal text-xl tracking-tight">nozune</span>
@@ -96,12 +100,7 @@ hi what are you doing here
         </div>
         </a>
 
-        <!-- Theme Toggle -->
-        <button id="theme-toggle"
-            class="flex items-center gap-2 font-mono text-xs border border-transparent hover:border-current px-3 py-1 transition-all">
-            <span id="theme-text">LIGHT MODE</span>
-            <div class="w-2 h-2 bg-current"></div>
-        </button>
+
     </nav>
 
     <!-- Lenis Wrapper -->
@@ -153,8 +152,8 @@ hi what are you doing here
                     class="flex items-center pl-[10vw] pr-[10vw] whitespace-nowrap will-change-transform">
                     <h2 id="about-text"
                         class="font-mono text-[15vh] md:text-[20vh] font-bold leading-none tracking-tighter text-transparent stroke-text">
-                        We reject the generic. Software is an art form. Precision in every pixel. Motion with purpose.
-                        UI with wit.
+                        We reject the generic. We build UI with personality. Software is an art form to us. Every pixel
+                        matters. Every animation matters. Every detail matters.
                     </h2>
                 </div>
 
@@ -168,7 +167,7 @@ hi what are you doing here
             <section id="projects" class="relative py-24 px-4 md:px-12 bg-current/5 min-h-[150vh]">
                 <div class="max-w-7xl mx-auto h-full flex flex-col">
                     <div class="mb-12 flex items-end justify-between pb-4 relative">
-                        <h2 class="text-4xl md:text-6xl font-bold tracking-tighter">featured projects</h2>
+                        <h2 class="text-4xl md:text-6xl font-bold tracking-tighter">featured projects.</h2>
                         <span class="font-mono text-sm opacity-60">01 — 03</span>
                         <!-- progress bar -->
                         <div class="absolute bottom-0 left-0 w-full h-[1px] bg-current/20">

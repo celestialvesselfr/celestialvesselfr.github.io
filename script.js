@@ -32,32 +32,9 @@ const addHoverListeners = () => {
 addHoverListeners();
 
 const html = document.documentElement;
-const toggleBtn = document.getElementById('theme-toggle');
-const themeText = document.getElementById('theme-text');
 const loader = document.getElementById('preloader');
 const loaderBar = document.getElementById('loader-bar');
 const loaderText = document.getElementById('loader-text');
-
-// cehck local storage
-const savedTheme = localStorage.getItem('theme');
-if (savedTheme === 'light') {
-    html.classList.add('light');
-    themeText.innerText = 'DARK MODE';
-} else {
-    themeText.innerText = 'LIGHT MODE';
-}
-
-toggleBtn.addEventListener('click', () => {
-    if (html.classList.contains('light')) {
-        html.classList.remove('light');
-        localStorage.setItem('theme', 'dark');
-        themeText.innerText = 'LIGHT MODE';
-    } else {
-        html.classList.add('light');
-        localStorage.setItem('theme', 'light');
-        themeText.innerText = 'DARK MODE';
-    }
-});
 
 // setup lenis stuff
 const lenis = new Lenis({
@@ -219,14 +196,13 @@ function initAnimations() {
         return span;
     });
 
-    // Horizontal Scroll & Typewriter Effect
     const scrollWidth = aboutContainer.scrollWidth - window.innerWidth;
 
     const tl = gsap.timeline({
         scrollTrigger: {
             trigger: aboutSection,
             start: "top top",
-            end: () => `+=${scrollWidth + window.innerWidth}`, // Scroll distance based on content width
+            end: () => `+=${scrollWidth + window.innerWidth}`,
             pin: true,
             scrub: 1,
             invalidateOnRefresh: true,
@@ -236,21 +212,21 @@ function initAnimations() {
         }
     });
 
-    // Move container horizontally
+    // move the container horizontally
     tl.to(aboutContainer, {
         x: () => -scrollWidth,
         ease: "none",
         duration: 1
     });
 
-    // Animate characters (Typewriter / Highlight effect)
+    // animate characters 
     chars.forEach((char, i) => {
         tl.to(char, {
             opacity: 1,
-            color: "var(--text-color)", // Fill color
+            color: "var(--text-color)",
             duration: 0.1,
             ease: "none"
-        }, i * (0.9 / chars.length)); // Staggered across the scroll duration
+        }, i * (0.9 / chars.length));
     });
 
     // -- project cards --
@@ -359,6 +335,7 @@ function initAnimations() {
             onPress: function () {
                 // bring to front on press
                 cardWrappers.forEach((w, i) => {
+                    w.style.zIndex = cards.length - i;
                 });
                 wrapper.style.zIndex = 100;
                 updateStats(card, wrapper);
@@ -486,6 +463,15 @@ function initAnimations() {
 
             requestAnimationFrame(animateFluid);
         };
+
         animateFluid();
     }
+
+    // Theme Switch on Scroll
+    ScrollTrigger.create({
+        trigger: "#projects",
+        start: "top bottom", // When top of projects hits bottom of viewport
+        onEnter: () => html.classList.add('light'),
+        onLeaveBack: () => html.classList.remove('light')
+    });
 }
