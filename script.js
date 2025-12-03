@@ -2,9 +2,15 @@
 hi what are you doing here
 */
 
+/*
+todo:
+- fill in this todo list
+- ???
+*/
+
 const cursor = document.getElementById('cursor');
 
-// Center the cursor anchor point
+// center cursor anchor point
 gsap.set(cursor, { xPercent: -50, yPercent: -50 });
 
 const xTo = gsap.quickTo(cursor, "x", { duration: 0.2, ease: "power3" });
@@ -15,7 +21,7 @@ window.addEventListener('mousemove', (e) => {
     yTo(e.clientY);
 });
 
-// Hover effects
+// hover effects
 const addHoverListeners = () => {
     const interactiveElements = document.querySelectorAll('a, button, .project-card');
     interactiveElements.forEach(el => {
@@ -53,7 +59,7 @@ toggleBtn.addEventListener('click', () => {
     }
 });
 
-// --- LENIS SETUP ---
+// setup lenis stuff
 const lenis = new Lenis({
     duration: 1.2,
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -64,15 +70,14 @@ const lenis = new Lenis({
     touchMultiplier: 2,
 });
 
-// Sync Lenis with GSAP ScrollTrigger
+// then sync lenis with scrolltrigger
 lenis.on('scroll', ScrollTrigger.update);
 gsap.ticker.add((time) => {
     lenis.raf(time * 1000);
 });
 gsap.ticker.lagSmoothing(0);
 
-// --- PRELOADER ---
-// Simulate load
+// preloader
 let loadProgress = 0;
 const loadInterval = setInterval(() => {
     loadProgress += Math.random() * 5;
@@ -105,11 +110,11 @@ function finishLoader() {
         }, "+=0.2");
 }
 
-// --- MAIN ANIMATIONS ---
+// animations (dont skid pls)
 function initAnimations() {
     gsap.registerPlugin(ScrollTrigger);
 
-    // 1. Hero Text Reveal
+    // hero text reveal :D
     const heroLines = document.querySelectorAll('.hero-line');
     gsap.from(heroLines, {
         y: 150,
@@ -120,13 +125,12 @@ function initAnimations() {
         delay: 0.2
     });
 
-    // Logo Animation & Tooltip
+    // logo/tooltip anims
     const logoLink = document.querySelector('#navbar a');
     const logoCollapse = document.querySelectorAll('.logo-collapse');
     const logoTooltip = document.getElementById('logo-tooltip');
 
-    // Initial state: Expanded
-    // ScrollTrigger to collapse logo when leaving hero
+    // use gsap to collapse logo when leaving hero
     ScrollTrigger.create({
         trigger: 'body',
         start: "top -100", // Collapse after 100px scroll
@@ -140,23 +144,23 @@ function initAnimations() {
         }
     });
 
-    // Hover Effects
+    // hover effect thing
     const tooltipX = gsap.quickTo(logoTooltip, "x", { duration: 0.1, ease: "power3" });
     const tooltipY = gsap.quickTo(logoTooltip, "y", { duration: 0.1, ease: "power3" });
 
     logoLink.addEventListener('mouseenter', () => {
-        // Expand logo on hover
+        // expand logo when hovered over
         gsap.to(logoCollapse, { width: "auto", opacity: 1, duration: 0.3, ease: "power2.out" });
-        // Show tooltip
+        // now show tooltip
         gsap.to(logoTooltip, { opacity: 1, scale: 1, duration: 0.2 });
     });
 
     logoLink.addEventListener('mouseleave', () => {
-        // Collapse if scrolled down
+        // collapse if scrolled down
         if (window.scrollY > 100) {
             gsap.to(logoCollapse, { width: 0, opacity: 0, duration: 0.3, ease: "power2.in" });
         }
-        // Hide tooltip
+        // then hide tooltip
         gsap.to(logoTooltip, { opacity: 0, scale: 0.9, duration: 0.2 });
     });
 
@@ -181,7 +185,7 @@ function initAnimations() {
         ease: 'none'
     });
 
-    // 1.5 Hero Scroll Exit Animation
+    // hero scroll exit animation :o
     const heroSection = document.querySelector('section'); // The first section is the hero
     const heroElements = heroSection.querySelectorAll('p, h1, .flex');
 
@@ -199,18 +203,18 @@ function initAnimations() {
         ease: "power1.in"
     });
 
-    // 2. About Section (Horizontal Typewriter)
+    // about section
     const aboutSection = document.getElementById('about');
     const aboutContainer = document.getElementById('about-container');
     const aboutText = document.getElementById('about-text');
 
-    // Split text into characters
+    // split text into characters
     const textContent = aboutText.innerText;
     aboutText.innerHTML = '';
     const chars = textContent.split('').map(char => {
         const span = document.createElement('span');
         span.innerText = char;
-        span.style.opacity = 0.2; // Initial dimmed state
+        span.style.opacity = 0.2;
         aboutText.appendChild(span);
         return span;
     });
@@ -249,25 +253,24 @@ function initAnimations() {
         }, i * (0.9 / chars.length)); // Staggered across the scroll duration
     });
 
-    // 3. Project Cards (Stacking Effect)
+    // -- project cards --
     const projectsSection = document.getElementById('projects');
     const cardWrappers = document.querySelectorAll('.card-wrapper');
     const cards = document.querySelectorAll('.project-card');
     const projectsProgress = document.getElementById('projects-progress');
 
-    // Initial positioning not needed with fromTo, but good for FOUC
+    // initial positioning isn't needed with fromto, but good for FOUC ig
     gsap.set(cardWrappers, { opacity: 0 });
 
-    // Create a timeline that pins the projects section
+    // create a timeline that pins the projects section
     const projectTl = gsap.timeline({
         scrollTrigger: {
             trigger: projectsSection,
             start: "top top",
-            end: "+=300%", // Scroll distance depends on card count
+            end: "+=300%",
             pin: true,
             scrub: 1,
             onUpdate: (self) => {
-                // Progress Bar Logic
                 gsap.to(projectsProgress, {
                     width: `${self.progress * 100}%`,
                     overwrite: true,
@@ -277,14 +280,12 @@ function initAnimations() {
         }
     });
 
-    // Helper to update stats
+    // helper to update stats
     const updateStats = (card, wrapper) => {
         const statsEl = card.querySelector('.card-stats');
         if (!statsEl) return;
 
-        // Get values
-        // Wrapper: xPercent, yPercent (Fan layout)
-        // Card: x, y (Drag offset)
+        // get values
         const wx = gsap.getProperty(wrapper, "xPercent");
         const wy = gsap.getProperty(wrapper, "yPercent");
         const cx = gsap.getProperty(card, "x");
@@ -295,30 +296,24 @@ function initAnimations() {
     };
 
     cardWrappers.forEach((wrapper, index) => {
-        // Slide in from sides (fromTo ensures correct direction)
-        // Card 1 (Void Terminal, Index 0): Center
-        // Card 2 (Ether Sync, Index 1): Left
-        // Card 3 (Onyx UI, Index 2): Right
-
-        // Define specific targets for the "fan" layout
         let targetX = 0;
         let targetY = 0;
         let targetRotation = 0;
 
         if (index === 0) {
-            targetX = 0; // Center
+            targetX = 0;
             targetRotation = 0;
         } else if (index === 1) {
-            targetX = -25; // Left (Reduced from -55)
+            targetX = -25;
             targetY = 10;
             targetRotation = -5;
         } else if (index === 2) {
-            targetX = 25; // Right (Reduced from 31/55)
+            targetX = 25;
             targetY = 10;
             targetRotation = 5;
         }
 
-        // Start from offscreen
+        // start from offscreen
         const startX = index % 2 === 0 ? -150 : 150;
 
         projectTl.fromTo(wrapper, {
@@ -339,40 +334,40 @@ function initAnimations() {
             onComplete: () => {
                 updateStats(cards[index], wrapper);
             }
-        }, index * 0.8); // Overlap timing
+        }, index * 0.8);
     });
 
 
 
-    // Draggable & Click Logic
+    // draggable/click logic (still buggy but i dont wanna fix it)
     cards.forEach((card, index) => {
         const wrapper = card.closest('.card-wrapper');
 
-        // Set initial z-index on wrapper
+        // set initial z-index on wrapper
         wrapper.style.zIndex = cards.length - index;
 
-        // Ensure card starts at 0,0 (fix for bounds issue)
+        // ensure card starts at 0,0 (ez fix for bounds issue)
         gsap.set(card, { x: 0, y: 0 });
 
-        updateStats(card, wrapper); // Initial update
+        updateStats(card, wrapper); // initial update
 
-        // Make draggable
+        // now make it draggable
         Draggable.create(card, {
             type: "x,y",
-            // bounds: "#cards-wrapper", // Removed to prevent conflict with initial off-screen position
+            // bounds: "#cards-wrapper", // removed to prevent conflict with initial off-screen position
             inertia: true,
             onPress: function () {
-                // Bring to front on press
+                // bring to front on press
                 cardWrappers.forEach((w, i) => {
                 });
                 wrapper.style.zIndex = 100;
                 updateStats(card, wrapper);
 
-                // Pop animation
+                // pop
                 gsap.to(this.target, { scale: 1.05, duration: 0.2, ease: "power2.out" });
             },
             onRelease: function () {
-                // Animate back to center (0,0) relative to wrapper
+                // animate back to center (0,0) relative to wrapper
                 gsap.to(this.target, {
                     x: 0,
                     y: 0,
@@ -390,7 +385,7 @@ function initAnimations() {
         });
     });
 
-    // Fluid Trail Effect
+    // fluid trail thing
     const canvas = document.getElementById('fluid-canvas');
     if (canvas) {
         const ctx = canvas.getContext('2d');
@@ -413,9 +408,8 @@ function initAnimations() {
                 this.dx = dx;
                 this.dy = dy;
                 this.life = 1;
-                this.decay = 0.01 + Math.random() * 0.01; // Slower decay
-                this.size = 60 + Math.random() * 40; // Much larger for blur effect
-                // Deep Blue / Purple range (220 - 280)
+                this.decay = 0.01 + Math.random() * 0.01;
+                this.size = 60 + Math.random() * 40;
                 this.hue = 220 + Math.random() * 60;
             }
 
@@ -423,7 +417,7 @@ function initAnimations() {
                 this.x += this.dx;
                 this.y += this.dy;
                 this.life -= this.decay;
-                this.size *= 0.96; // Shrink slightly
+                this.size *= 0.96;
             }
 
             draw(ctx) {
@@ -441,7 +435,6 @@ function initAnimations() {
         }
 
         const addParticles = (x, y, dx, dy) => {
-            // Add fewer particles per step but relying on interpolation for density
             for (let i = 0; i < 2; i++) {
                 particles.push(new Particle(x, y, dx * 0.5 + (Math.random() - 0.5), dy * 0.5 + (Math.random() - 0.5)));
             }
@@ -461,9 +454,9 @@ function initAnimations() {
                 const currentX = e.clientX;
                 const currentY = e.clientY;
 
-                // Interpolation to fill gaps
+                // interpolate or smth (brain died while trying to figure out the math)
                 const dist = Math.hypot(currentX - lastPos.x, currentY - lastPos.y);
-                const steps = Math.ceil(dist / 5); // Add particle every 5px
+                const steps = Math.ceil(dist / 5);
 
                 const dx = (currentX - lastPos.x) / steps;
                 const dy = (currentY - lastPos.y) / steps;
